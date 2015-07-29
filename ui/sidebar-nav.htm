@@ -1,0 +1,16 @@
+          <ul class="nav nav-sidebar">
+          <repeat group="{{ @menu_all_users }}" value="{{ @item }}">
+            <li <check if="{{ @item.active }}">class="active"</check>>
+            	<a href="{{ @item.path }}">{{ @item.label }}<check if="{{ @item.active }}"><span class="sr-only">(current)</span></check></a>
+            </li>
+          </repeat>
+          </ul>
+          <check if="{{ @menu_admin_users }}">
+          <ul class="nav nav-sidebar">
+          <repeat group="{{ @menu_admin_users }}" value="{{ @item }}">
+            <li <check if="{{ @item.active }}">class="active"</check>>
+            	<a href="{{ @item.path }}">{{ @item.label }}<check if="{{ @item.active }}"><span class="sr-only">(current)</span></check></a>
+            </li>
+          </repeat>
+          </ul>
+          </check>

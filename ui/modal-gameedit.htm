@@ -1,0 +1,41 @@
+<div class="modal fade" id="gameEditModal" tabindex="-1" role="dialog" aria-labelledby="gameEditModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gameEditModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+      	<form method="POST" action="{{ 'game_postdata' | alias}}">
+			    <div id="game-date">
+			    	<div class="form-group">
+              <div class='input-group date' id='gameGameDate'>
+                  <input type='text' name="game_date" class="form-control" />
+                  <span class="input-group-addon">
+                      <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+              </div>				    		
+			    	</div>
+			    </div>
+			    <div id="game-score">
+					  <div class="form-group">
+					    <label for="visitingScore"></label>
+					    <input type="text" class="form-control" id="visitingScore" name="visiting_score" placeholder="0">
+					  </div>				    	
+					  <div class="form-group">
+					    <label for="hostScore"></label>
+					    <input type="text" class="form-control" id="hostScore" name="host_score" placeholder="0">
+					  </div>				    					    	
+			    </div>
+	        <input type="hidden" name="eid" value="" id="eid" />
+	        <input type="hidden" name="section" value="" id="section" />
+	        <input type="hidden" name="redirect_to" value="" id="redirectTo" />
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
