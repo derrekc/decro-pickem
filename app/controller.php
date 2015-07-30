@@ -22,8 +22,13 @@ abstract class Controller {
 		}
 
 		$db = $this->db;
-		$user = new \DB\SQL\Mapper($db, 'users');
-		$user->load(array('name=?', $f3->get('SESSION.user_id')));
+		$user = FALSE;
+		if ($f3->exists('SESSION.user_id')) {
+			$user = new \DB\SQL\Mapper($db, 'users');
+			$user->load(array('name=?', $f3->get('SESSION.user_id')));
+		} else {
+			$user = FALSE;
+		}
 		$f3->set('user', $user);
 
 		// $db=$this->db;
@@ -60,7 +65,7 @@ abstract class Controller {
 			rename('setup.sql','setup.$ql');
 		}
 		// Use database-managed sessions
-		new DB\SQL\Session($db);
+		$this->s = new DB\SQL\Session($db);
 		
 		// Save frequently used variables
 		$this->db=$db;
