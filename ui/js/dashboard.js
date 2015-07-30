@@ -49,5 +49,14 @@
 		return evt.preventDefault();
 	});
 	
-	
+	$('.typeahead').typeahead({
+		minLength	: 2,
+		source: function(q, process) {
+			return $.getJSON(
+				'/team-typeahead/' + q,
+				function (data) {
+					return process(data);
+				});
+		}
+	});
 })(jQuery);
