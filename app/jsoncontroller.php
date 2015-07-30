@@ -4,21 +4,6 @@ class JsonController extends Controller {
 
 	//! HTTP route pre-processor
 	function beforeroute($f3) {
-		if (!$f3->exists('SESSION.user_id')) {
-			$f3->reroute('/login');
-			return;
-		}
-
-		$db = $this->db;
-		$user = new \DB\SQL\Mapper($db, 'users');
-		$user->load(array('name=?', $f3->get('SESSION.user_id')));
-		$f3->set('user', $user);
-		
-		if ($user->isadmin == 'N') {
-			$f3->set('SESSION.error_message', 'You do not have permission to visit this section');
-			$f3->reroute('/');
-		}
-		
 		header('Content-type: application/json', TRUE);
 	}
 
@@ -31,30 +16,7 @@ class JsonController extends Controller {
 		parent::__construct();
 	}
 	
-	function score_edit($f3, $args) {
-		$game = new \DB\SQL\Mapper($this->db, 'game');
-		$game->load(array('eid=?', $args['eid']));
-
-		echo json_encode(array(
-			'host_team' => $game->host_team,
-			'host_score' => $game->host_score,
-			'visiting_team' => $game->visiting_team,
-			'visiting_score' => $game->visiting_score,
-			'eid' => $game->eid,
-		));
-	}
-	
-	function gamedate_edit($f3, $args) {
-		$game = new \DB\SQL\Mapper($this->db, 'game');
-		$game->load(array('eid=?', $args['eid']));
-
-		echo json_encode(array(
-			'event_date' => $game->event_date,
-			'event_date_string' => $game->event_date_string,
-			'game_date_moment' => $game->game_date_moment,
-			'eid' => $game->eid,
-		));
-	}
+	public function do_render($f3) {}
 	
 	function team_typeahead($f3, $args) {
 		$query = "
@@ -70,8 +32,8 @@ class JsonController extends Controller {
 		$return = array();
 		foreach ($teams as $team) {
 			$return[] = array(
-				'name' => $team['name'],
-				'displaytitle' => $team['displaytitle'],
+				'name' => $team['displaytitle'],
+				'machinename' => $team['name'],
 				'nickname' => $team['nickname'],
 				'tid' => $team['tid'],
 			);

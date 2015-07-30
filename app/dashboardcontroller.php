@@ -27,6 +27,7 @@ class DashboardController extends Controller {
 	protected function prepareUserMenu($f3) {
 		$menu_all_users = array();
 		$menu_all_users[] = array('path' => '/', 'label' => 'Overview', 'active' => '/' == $f3->get('PATH'));
+		$menu_all_users[] = array('path' => '/picks', 'label' => 'Picks', 'active' => '/picks' == $f3->get('PATH'));
 		$menu_all_users[] = array('path' => '/standings', 'label' => 'Standings', 'active' => '/standing' == $f3->get('PATH'));
 		$menu_all_users[] = array('path' => '/players', 'label' => 'Players', 'active' => '/players' == $f3->get('PATH'));
 		$f3->set('menu_all_users', $menu_all_users);
