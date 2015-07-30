@@ -1,0 +1,35 @@
+<form method="POST" action="{{ 'post_picks' | alias }}">
+  <div class="table-responsive">
+    <table class="table table-hover pickem-slate">
+      <thead>
+        <tr>
+        	<th width="180">&nbsp;</th>
+          <th>Game</th>
+          <th>Date</th>
+          <th>Kickoff/Winner</th>
+          <th>Your Pick</th>
+        </tr>
+      </thead>
+      <tbody>
+      	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
+        <tr>
+        	<td width="180">
+        		<img height="32" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
+        		<img height="32" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
+        	</td>
+          <td>
+          	<strong>{{ @game.visiting_team }} {{ @game.vs_at_symbol }} {{ @game.host_team }}</strong><br />
+          	<small>{{ @game.location }}</small>
+          </td>
+          <td>{{ @game.game_date_short }}</td>
+          <td>{{ @game.kickoff_time }}</td>
+          <td>
+          	&nbsp;
+          </td>
+        </tr>
+        </repeat>
+      </tbody>
+    </table>
+  </div>
+  <button type="submit" class="btn btn-primary disabled">Submit Picks</button>
+</form>
