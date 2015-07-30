@@ -1,0 +1,5 @@
+<select name="pick_team_name[{{ @game.eid }}]" class="form-control input-sm">
+<repeat group="{{ @pick_options }}" value="{{ @option }}">
+	<option value="{{ @option.value }}" <check if="{{ @option.active }}">SELECTED</check>>{{ @option.label }}</option>
+</repeat>
+</select>
