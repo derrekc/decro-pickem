@@ -1,3 +1,12 @@
+<check if="{{ @has_picks }}">
+	<false>
+	<div class="alert alert-warning" role="alert">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  Make sure to submit your picks!
+	</div>
+	</false>
+</check>
 <form method="POST" action="{{ 'post_picks' | alias }}">
   <div class="table-responsive">
     <table class="table table-hover pickem-slate">
@@ -24,12 +33,15 @@
           <td>{{ @game.game_date_short }}</td>
           <td>{{ @game.kickoff_time }}</td>
           <td>
-          	&nbsp;
+          	<set pick_options="{{ @game.pick_options }}" />
+          	<include href="pick_options.htm" />
           </td>
         </tr>
         </repeat>
       </tbody>
     </table>
   </div>
-  <button type="submit" class="btn btn-primary disabled">Submit Picks</button>
+  <input type="hidden" name="uid" value="{{ @user.uid }}" />
+  <input type="hidden" name="token" value="{{ @SESSION.csrf }}" />
+  <button type="submit" class="btn btn-primary">Submit Picks</button>
 </form>
