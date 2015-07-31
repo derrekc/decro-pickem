@@ -114,6 +114,7 @@ class PickemCMS extends Controller {
 			} else {
 				$f3->clear('COOKIE.sent');
 				$f3->clear('SESSION.captcha');
+
 				$f3->set('SESSION.user_id',$f3->get('POST.user_id'));
 				$f3->set('SESSION.crypt',$crypt);
 				$f3->set('SESSION.lastseen',time());

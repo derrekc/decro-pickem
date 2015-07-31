@@ -15,7 +15,21 @@ class DashboardController extends Controller {
 		$f3->set('inc', 'pick-table.htm');
 	}
 	
-	public function do_render($f3) {
+	public function do_render($f3) {		
+		if ($f3->exists('SESSION.success_message')) {
+			$f3->set('success_message', $f3->get('SESSION.success_message'));
+			$f3->clear('SESSION.success_message');
+		}
+		
+		if ($f3->exists('SESSION.warning_message')) {
+			$f3->set('warning_message', $f3->get('SESSION.warning_message'));
+			$f3->clear('SESSION.warning_message');
+		}
+		
+		if ($f3->exists('SESSION.error_message')) {
+			$f3->set('warning_message', $f3->get('SESSION.warning_message'));
+			$f3->clear('SESSION.warning_message');
+		}
 		echo Template::instance()->render('dashboard.htm');	
 	}
 	
