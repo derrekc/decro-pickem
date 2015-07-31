@@ -15,6 +15,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/ui/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
     <link href="/ui/css/dashboard.css" rel="stylesheet">
@@ -45,10 +46,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ 'welcome' | alias }}">Dashboard</a></li>
+            <li><a href="{{ 'welcome' | alias }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>&nbsp;Dashboard</a></li>
             <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a class="btn" href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></a></li>
+            <li><a href="{{ 'user_profile', 'uid=' . @user.uid | alias }}">Profile</a></li>
+            <li><a class="btn" href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -63,7 +64,8 @@
           <include href="sidebar-nav.htm" />
         </div>
         <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">ACCbbs Pickem 2015</h1>
+          <h1 class="page-header"><check if="{{ @page_title }}"><true>{{ @page_title }}</true><false>ACCbbs Pickem 2015</false></check></h1>
+          <include href="messages.htm" />
           <include href="{{ @inc }}" />
         </div>
       </div>

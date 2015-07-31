@@ -12,17 +12,17 @@
     <table class="table table-hover pickem-slate">
       <thead>
         <tr>
-        	<th width="180">&nbsp;</th>
+        	<th width="160" class="hidden-xs hidden-sm">&nbsp;</th>
           <th>Game</th>
           <th>Date</th>
-          <th>Kickoff/Winner</th>
+          <th>Kickoff/<br />Winner</th>
           <th>Your Pick</th>
         </tr>
       </thead>
       <tbody>
       	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
         <tr>
-        	<td width="180">
+        	<td width="160" class="hidden-xs hidden-sm">
         		<img height="32" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
         		<img height="32" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
         	</td>

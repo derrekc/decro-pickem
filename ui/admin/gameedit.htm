@@ -1,16 +1,75 @@
-<form>
+<form method="POST" action="{{ 'save_game' | alias }}">
 	<div class="form-horizontal">
 		<div class="form-group">
-			<label for="hostTeamName" class="col-sm-2">Home Team</label>
+			<label for="hostTeam" class="col-sm-1">Home Team</label>
 			<div class="col-sm-7">
-				<input type="text" class="form-control typeahead" id="hostTeamName" />
+				<input type="text" class="form-control team-typeahead" autocomplete="off" id="hostTeam" data-target="#hostTeamName" value="{{ @edit_game.host_team }}"/>
+				<check if="{{ @edit_game.host_team == '' }}">
+					<check if="{{ @edit_game.host_team_name != '' }}">
+						<p class="help-block small">{{ @edit_game.host_team_name }}</p>
+					</check>
+				</check>
+			</div>
+			<div class="col-sm-2">
+				<input type="number" class="form-control" id="hostScore" name="host_score" value="{{ @edit_game.host_score }}" />
+				<p class="help-block small text-right">Score</p>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="visitingTeamName" class="col-sm-2">Visiting Team</label>
+			<label for="visitingTeam" class="col-sm-1">Visiting Team</label>
 			<div class="col-sm-7">
-				<input type="text" class="form-control typeahead" id="visitingTeamName" />
+				<input type="text" class="form-control team-typeahead" autocomplete="off" id="visitingTeam" data-target="#visitingTeamName" value="{{ @edit_game.visiting_team }}" />
+				<check if="{{ @edit_game.visiting_team == '' }}">
+					<check if="{{ @edit_game.visiting_team_name != '' }}">
+						<p class="help-block small">{{ @edit_game.visiting_team_name }}</p>
+					</check>
+				</check>
+			</div>
+			<div class="col-sm-2">
+				<input type="number" class="form-control" id="visitingScore" name="visiting_score" value="{{ @edit_game.visiting_score }}" />
+				<p class="help-block small text-right">Score</p>
 			</div>
 		</div>
+				
+		<div class="form-group">
+			<label for="location" class="col-sm-1">Location</label>
+			<div class="col-sm-7">
+				<input type="text" class="form-control location-typeahead" id="location" name="location" value="{{ @edit_game.location }}" />
+			</div>
+		</div>
+		
+	  <div class="form-group">
+	    <div class="col-sm-offset-1 col-sm-11">
+	      <div class="checkbox">
+	        <label>
+	          <input type="checkbox" name="neutral" value="Y" <check if="{{ @edit_game.neutral == 'Y' }}">checked</check> /> Neutral Site?
+	        </label>
+	      </div>
+	    </div>
+	  </div>
+		
+	  <div class="form-group">
+	    <div class="col-sm-6">
+	      <div class='input-group date' id='gameGameDate'>
+	      	<div class="input-group-addon">Game Date</div>
+	        <input type='text' name="game_date" class="form-control" data-date-value="{{ @edit_game.game_date_moment }}"/>
+	        <span class="input-group-addon">
+	            <span class="glyphicon glyphicon-calendar"></span>
+	        </span>
+	      </div>
+	      <p class="help-block small">Enter time in ET</p>			    		
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <div class="col-sm-6">
+	      <button type="submit" class="btn btn-primary">Save Changes</button>
+	    </div>
+	  </div>		
 	</div>
+	<input type="hidden" name="token" value="{{ @SESSION.csrf }}" />
+	<input type="hidden" name="eid" value="{{ @edit_game.eid }}" />
+	<input type="hidden" id="hostTeamName" name="host_team_name" value="{{ @edit_game.host_team_name }}" />
+	<input type="hidden" id="visitingTeamName" name="visiting_team_name" value="{{ @edit_game.visiting_team_name }}" />
+	<input type="hidden" name="return_to" value="{{ @return_to }}" />
 </form>
