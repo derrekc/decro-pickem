@@ -1,0 +1,47 @@
+<check if="{{ @user_error_msg }}">
+	<div class="alert alert-danger">
+	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Error:</span>
+	  {{ @user_error_msg }}
+	</div>
+</check>
+<form action="{{ 'user_profile_save' | alias }}" method="POST" enctype="multipart/form-data">
+<fieldset class="form-inline" style="margin-bottom: 1em;">
+	<legend>The Basics</legend>
+  <div class="form-group">
+    <label for="pickemUserName">Name</label>
+    <input type="text" class="form-control" id="pickemUserName" name="user_id" placeholder="Jane Doe" value="{{ @edit_user.name }}">
+  </div>
+  <div class="form-group">
+    <label for="pickemUserEmail">Email</label>
+    <input type="email" class="form-control" id="pickemUserEmail" name="mail" placeholder="jane.doe@example.com" value="{{ @edit_user.mail }}">
+  </div>
+</fieldset>
+<fieldset class="form-inline" style="margin-bottom: 1em;">
+	<legend>Change Password</legend>
+  <div class="form-group">
+    <label for="pickemCurrentPassword">Current</label>
+    <input type="password" class="form-control" id="pickemCurrentPassword" name="pass">
+  </div>
+  <div class="form-group">
+    <label for="pickemNewPassword">New</label>
+    <input type="password" class="form-control" id="pickemNewPassword" name="new_pass">
+  </div>
+  <div class="form-group">
+    <label for="pickemVerifyPassword">Verify</label>
+    <input type="password" class="form-control" id="pickemVerifyPassword" name="verify_pass">
+  </div>
+</fieldset>
+<fieldset class="form-inline" style="margin-bottom: 1em;">
+	<legend>Your Picture</legend>
+  <div class="form-group">
+    <label for="pickemAvatar">File</label>
+    <input type="file" class="form-control file" id="pickemCurrentPassword" name="file_upload">
+  </div>
+</fieldset>
+<input type="hidden" name="uid" value="{{ @edit_user.uid }}" />
+<div class="form-inline">
+	<button class="btn btn-primary" type="submit">Save Changes</button>
+</div>
+</form>
+ 
