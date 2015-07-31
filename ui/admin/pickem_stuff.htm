@@ -1,0 +1,93 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Close Pickem Week
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+      	<div class="row">
+      		<form action="{{ 'close_pickem_week' | alias }}" method="POST" class="form-inline col-sm-12">
+      			<fieldset>
+							<p>When the current week is done, use the button (below) to close the slate.  This option does the following:</p>
+							<ul>
+								<li>Updates and finalizes the overall standings</li>
+								<li>Updates "bye" information for each active player</li>
+								<li>Marks the week as "closed" in the database.</li>
+							</ul> 
+						  <div class="form-group">
+						    <label class="sr-only" for="closePickemWeek">Clear picks for week</label>
+						    <div class="input-group">
+						      <div class="input-group-addon">Select Pickem</div>
+						      <select class="form-control" name="pickem_id">
+						      	<option value="1">ACCbbs FB Pick'em 2015</option>
+						      </select>
+						    </div>
+						    <div class="input-group">
+						      <div class="input-group-addon">Select Week</div>
+						      <select class="form-control" name="week">
+						      	<option>1</option>
+						      </select>
+						    </div>
+						  </div>
+						  <button type="submit" class="btn btn-primary">Close Pickem Week</button>
+						</fieldset>     			
+      		</form>
+      	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Clear Picks
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+      	<div class="row">
+      		<form action="{{ 'clear_picks' | alias }}" method="POST" class="form-inline col-sm-12">
+      			<fieldset>
+	      			<p>This will clear the picks for the selected week, as well as removing the timestamps for each player that has submitted a pick for the target week.</p>
+						  <div class="form-group">
+						    <label class="sr-only" for="exampleInputAmount">Clear picks for week</label>
+						    <div class="input-group">
+						      <div class="input-group-addon">Select Pickem</div>
+						      <select class="form-control" name="pickem_id">
+						      	<option value="1">ACCbbs FB Pick'em 2015</option>
+						      </select>
+						    </div>
+						    <div class="input-group">
+						      <div class="input-group-addon">Select Week</div>
+						      <select class="form-control" name="week">
+						      	<option>1</option>
+						      </select>
+						    </div>
+						  </div>
+						  <button type="submit" class="btn btn-primary">Clear Picks</button>
+      			</fieldset>	
+      		</form>
+      	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Collapsible Group Item #3
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+      </div>
+    </div>
+  </div>
+</div>
