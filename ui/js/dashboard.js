@@ -50,6 +50,7 @@
 				} else if (data_attr == "game-date") {
 					game_date = moment(data.game_date_moment);
 					dtp = $('#gameGameDate').data("DateTimePicker").defaultDate(game_date);
+					$('#gameEditModalLabel').html(data.modal_title);
 					
 				}
 				$(data_target).modal('show');

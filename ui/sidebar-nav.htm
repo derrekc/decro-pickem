@@ -5,7 +5,7 @@
             </li>
           </repeat>
           </ul>
-          <check if="{{ @menu_admin_users }}">
+          <check if="{{ isset(@menu_admin_users) }}">
           <ul class="nav nav-sidebar">
           <repeat group="{{ @menu_admin_users }}" value="{{ @item }}">
             <li <check if="{{ @item.active }}">class="active"</check>>

@@ -33,6 +33,9 @@
   </div>
 </fieldset>
 <fieldset class="form-inline" style="margin-bottom: 1em;">
+	<check if="{{ isset(@edit_user.picture )}}">
+		<div style="margin-bottom: 1em;"><img src="/assets/avatars/{{ @edit_user.picture }}" class="img-thumbnail" width="90" /></div>
+	</check>
 	<legend>Your Picture</legend>
   <div class="form-group">
     <label for="pickemAvatar">File</label>
