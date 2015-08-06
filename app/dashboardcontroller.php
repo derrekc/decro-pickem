@@ -12,7 +12,7 @@ class DashboardController extends Controller {
 	}
 
 	function home($f3) {
-		$f3->set('inc', 'pick-table.htm');
+		$f3->set('inc', 'overview.htm');
 	}
 	
 	public function do_render($f3) {		
@@ -38,7 +38,7 @@ class DashboardController extends Controller {
 		parent::__construct();
 	}
 	
-	protected function prepareUserMenu($f3) {
+	public function prepareUserMenu($f3) {
 		$menu_all_users = array();
 		$menu_all_users[] = array('path' => '/', 'label' => 'Overview', 'active' => '/' == $f3->get('PATH'));
 		$menu_all_users[] = array('path' => '/picks', 'label' => 'Picks', 'active' => '/picks' == $f3->get('PATH'));
@@ -48,10 +48,47 @@ class DashboardController extends Controller {
 		
 		$menu_admin_users = array();
 		if ($f3->get('user')->isadmin) {
-			$menu_admin_users[] = array('path' => '/admin/games', 'label' => 'Games', 'active' => preg_match('/^\/admin\/games/', $f3->get('PATH')) == 1);
-			$menu_admin_users[] = array('path' => '/admin/teams', 'label' => 'Teams', 'active' => preg_match('/^\/admin\/teams/', $f3->get('PATH')) == 1);
-			$menu_admin_users[] = array('path' => '/admin/pickem', 'label' => 'Pickem Stuff', 'active' => preg_match('/^\/admin\/pickem/', $f3->get('PATH')) == 1);
+			$menu_admin_users[] = array('path' => '/admin/games', 'label' => 'Manage Games', 'active' => preg_match('/^\/admin\/games/', $f3->get('PATH')) == 1);
+			$menu_admin_users[] = array('path' => '/admin/teams', 'label' => 'Manage Teams', 'active' => preg_match('/^\/admin\/teams/', $f3->get('PATH')) == 1);
+			$menu_admin_users[] = array('path' => '/admin/pickem', 'label' => 'Pickem Stuff', 'active' => preg_match('/^\/admin\/pickem(\/)?$/', $f3->get('PATH')) == 1);
+			$menu_admin_users[] = array('path' => '/admin/pickem/players', 'label' => 'Player Status', 'active' => preg_match('/^\/admin\/pickem\/players/', $f3->get('PATH')) == 1);
+			$menu_admin_users[] = array('path' => '/admin/importpoll', 'label' => 'Import AP Poll', 'active' => preg_match('/^\/admin\/importpoll/', $f3->get('PATH')) == 1);
 		}
 		$f3->set('menu_admin_users', empty($menu_admin_users) ? FALSE : $menu_admin_users);
+	}
+
+	//! Custom error page
+	function error($f3) {
+		$content = $f3->get('ERROR.text') . '<br /><br />';
+		#echo $f3->get('ERROR.text') . '<br /><br />';
+		
+		foreach ($f3->get('ERROR.trace') as $frame) {
+			$content .= '<div>' . print_r($frame, true) . "</div><br />";
+		}
+		$f3->set('content', $content);
+		/*
+		$log=new Log('error.log');
+		$log->write($f3->get('ERROR.text'));
+		foreach ($f3->get('ERROR.trace') as $frame)
+			if (isset($frame['file'])) {
+				// Parse each backtrace stack frame
+				$line='';
+				$addr=$f3->fixslashes($frame['file']).':'.$frame['line'];
+				if (isset($frame['class']))
+					$line.=$frame['class'].$frame['type'];
+				if (isset($frame['function'])) {
+					$line.=$frame['function'];
+					if (!preg_match('/{.+}/',$frame['function'])) {
+						$line.='(';
+						if (isset($frame['args']) && $frame['args'])
+							$line.=$f3->csv($frame['args']);
+						$line.=')';
+					}
+				}
+				// Write to custom log
+				$log->write($addr.' '.$line);
+			}
+		*/
+		#$f3->set('inc','error.htm');
 	}
 }
