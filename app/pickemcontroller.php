@@ -53,8 +53,8 @@ class PickemController extends DashboardController {
 			$f3->reroute('@welcome');
 		}
 
-		header("Content-type: application/json", TRUE);
-		$this->use_json = TRUE;
+		#header("Content-type: application/json", TRUE);
+		#$this->use_json = TRUE;
 
 		$POST = $f3->get('POST');
 		$pick = new \DB\SQL\Mapper($this->db, 'pick');
