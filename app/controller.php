@@ -13,6 +13,7 @@ abstract class Controller {
 		$use_json = FALSE;
 		
 	abstract protected function do_render($f3);
+	abstract protected function prepareUserMenu($f3);
 		
 	//! HTTP route pre-processor
 	function beforeroute($f3) {		
@@ -22,6 +23,7 @@ abstract class Controller {
 		}
 
 		$db = $this->db;
+		
 		$user = FALSE;
 		if ($f3->exists('SESSION.user_id')) {
 			$user = new \DB\SQL\Mapper($db, 'users');
@@ -30,11 +32,6 @@ abstract class Controller {
 			$user = FALSE;
 		}
 		$f3->set('user', $user);
-
-		// $db=$this->db;
-		// Prepare user menu
-		//$f3->set('menu',
-		//	$db->exec('SELECT slug,title FROM pages ORDER BY position;'));
 	}
 
 	//! HTTP route post-processor
