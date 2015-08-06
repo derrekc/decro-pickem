@@ -1,7 +1,7 @@
 <?php
 namespace Admin;
 
-class GameController extends \DashboardController {
+class GameController extends \AdminController {
 	
 	function games_home($f3) {
 		$game = new \DB\SQL\Mapper($this->db, 'game');
@@ -24,6 +24,7 @@ class GameController extends \DashboardController {
 			'modal-gameedit.htm',
 		);
 		$f3->set('modals', $modals);
+		$f3->set('footer_inc', 'admin/gameadd_quick.htm');
 	}
 	
 	function game_edit($f3, $args) {
@@ -97,6 +98,7 @@ class GameController extends \DashboardController {
 		$game->load(array('eid=?', $args['eid']));
 
 		echo json_encode(array(
+			'modal_title' => sprintf("%s vs %s", $game->visiting_team, $game->host_team),
 			'event_date' => $game->event_date,
 			'event_date_string' => $game->event_date_string,
 			'game_date_moment' => $game->game_date_moment,
