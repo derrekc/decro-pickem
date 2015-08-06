@@ -1,19 +1,10 @@
 <?php
 
-class AdminController extends Controller {
+class AdminController extends DashboardController {
 
 	//! HTTP route pre-processor
 	function beforeroute($f3) {
 		parent::beforeroute($f3);
-		if (!$f3->exists('SESSION.user_id')) {
-			$f3->reroute('/login');
-			return;
-		}
-
-		$db = $this->db;
-		$user = new \DB\SQL\Mapper($db, 'users');
-		$user->load(array('name=?', $f3->get('SESSION.user_id')));
-		$f3->set('user', $user);
 		
 		if ($user->isadmin == 'N') {
 			$f3->set('SESSION.error_message', 'You do not have permission to visit this section');
@@ -25,6 +16,7 @@ class AdminController extends Controller {
 	function afterroute($f3) {
 		// Render HTML layout
 		// 
+		$f3->set('use_footer', TRUE);
 		parent::afterroute($f3);
 	}
 
