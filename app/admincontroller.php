@@ -21,7 +21,8 @@ class AdminController extends DashboardController {
 	}
 
 	public function do_render($f3) {
-		echo \Template::instance()->render('dashboard.htm');
+		//echo \Template::instance()->render('dashboard.htm');
+		parent::do_render($f3);
 	}
 	
 	//! Instantiate class
@@ -30,7 +31,7 @@ class AdminController extends DashboardController {
 		$this->default_template = 'dashboard.htm';
 	}
 	
-	function home($f3) {
+	function home($f3, $args) {
 		$f3->set('inc', 'admin.htm');
 	}
 }

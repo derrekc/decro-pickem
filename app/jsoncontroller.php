@@ -16,14 +16,43 @@ class JsonController extends Controller {
 		parent::__construct();
 	}
 	
+	public function prepareUserMenu($f3) {}
 	public function do_render($f3) {}
 	
+	function gamelocation_typeahead($f3, $args) {
+		$location = strtolower($args['q']);
+		$query = "
+			SELECT location  
+			FROM sportsevent 
+			WHERE 
+				(
+				LOWER(location) like '" . $location . "%' 
+				)
+			ORDER BY location
+		";
+		$locations = $this->db->exec($query);
+		
+		$return = array();
+		foreach ($locations as $l) {
+			$return[] = array(
+				'name' => $l['location'],
+			);
+		}
+		
+		echo json_encode($return);
+	}
+	
 	function team_typeahead($f3, $args) {
+		$team = strtolower($args['q']);
 		$query = "
 			SELECT name, displaytitle, nickname, tid 
 			FROM team 
 			WHERE 
-				LOWER(name) like '" . $args['q'] . "%' OR LOWER(displaytitle) LIKE '" . $args['q'] . "%'
+				(
+				LOWER(name) like '" . $team . "%' OR 
+				LOWER(displaytitle) LIKE '" . $team . "%' OR
+				LOWER(title) LIKE '" . $team . "%'
+				)
 				AND sport = 'ncaaf'
 			ORDER BY displaytitle
 		";

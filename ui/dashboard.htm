@@ -47,11 +47,12 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="{{ 'welcome' | alias }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>&nbsp;Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
+            <!--li><a href="#">Settings</a></li-->
             <check if="{{ @user }}">
             	<true>
+            		<li><a href="{{ 'current_slate' | alias }}" title="Make Your Picks">Make Your Picks</a></li>
             		<li><a href="{{ 'user_profile', 'uid=' . @user.uid | alias }}">Profile</a></li>
-            		<li><a class="btn" href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a></li>
+            		<li><a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a></li>
             	</true>
             </check>
             
@@ -70,10 +71,13 @@
         </div>
         <div class="col-sm-10 col-sm-offset-2 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><check if="{{ @page_title }}"><true>{{ @page_title }}</true><false>ACCbbs Pickem 2015</false></check></h1>
+          
           <include href="messages.htm" />
+          
           <check if="{{ isset(@content) }}">
           	{{ @content | raw }}
           </check>
+          
           <include href="{{ @inc }}" />
         </div>
       </div>

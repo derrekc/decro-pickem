@@ -7,34 +7,77 @@
 	</div>
 	</false>
 </check>
+	<!--div class="alert alert-info" role="alert">
+	  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+	  <span class="sr-only">Please note:</span>
+	 	The staff is in the process of adding and removing games for Week 1.  You will likely have to resubmit your picks soon.
+	</div-->
+<div class="alert alert-info alert-dismissible" role="alert">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <span class="sr-only">Info:</span>
+  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+  <strong>Note:</strong> You can set your favorite team on the <a href="{{ 'user_profile' | alias }}"><strong>User Profile</strong></a> page.
+</div>	
+
+<!-- Split button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-default">Compare Picks With...</button>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+  <repeat group="{{ @active_players }}" value="{{ @p }}">
+    <li><a href="{{ 'compare_picks', 'p1=' . @user.uid . ',p2=' . @p.uid | alias }}">{{ @p.playername }}</a></li>
+  </repeat>
+  </ul>
+</div>
+
 <form method="POST" action="{{ 'post_picks' | alias }}">
   <div class="table-responsive">
     <table class="table table-hover pickem-slate">
       <thead>
         <tr>
-        	<th width="160" class="hidden-xs hidden-sm">&nbsp;</th>
-          <th>Game</th>
+        	<th width="160">&nbsp;</th>
+          <th class="hidden-xs hidden-sm">Game</th>
           <th>Date</th>
-          <th>Kickoff/<br />Winner</th>
+          <th class="hidden-xs">Kickoff/<br />Winner</th>
           <th>Your Pick</th>
+          <th class="text-center hidden-xs hidden-sm">Notes</th>
         </tr>
       </thead>
       <tbody>
       	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
         <tr>
-        	<td width="160" class="hidden-xs hidden-sm">
-        		<img height="32" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
-        		<img height="32" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
+        	<td width="160">
+        		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.visiting_team_name }}" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
+        		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.host_team_name }}" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
         	</td>
-          <td>
+          <td class="hidden-xs hidden-sm">
           	<strong>{{ @game.visiting_team }} {{ @game.vs_at_symbol }} {{ @game.host_team }}</strong><br />
           	<small>{{ @game.location }}</small>
           </td>
           <td>{{ @game.game_date_short }}</td>
-          <td>{{ @game.kickoff_time }}</td>
+          <td class="hidden-xs">{{ @game.kickoff_time }}</td>
           <td>
-          	<set pick_options="{{ @game.pick_options }}" />
-          	<include href="pick_options.htm" />
+          	<check if="{{ @pickem_week.open == 'Y' }}">
+         			<true>
+         				<check if="{{ @game.is_open }}">
+         					<true>
+			          		<set pick_options="{{ @game.pick_options }}" />
+			          		<include href="pick_options.htm" />
+         					</true>
+			          	<false>
+			          		<img height="32" src="/assets/logos/ncaaf/{{ @game.pick_team_name }}.gif" />
+			          	</false>
+         				</check>
+         			</true>
+         			<false>&nbsp;</false>
+          	</check>
+          </td>
+          <td class="hidden-sm hidden-xs text-right">
+          	<check if="{{ @pickem_week.open == 'Y' }}"><div><small>{{ @game.pick_count_msg | raw }}</small></div></check>
+          	<check if="{{ @user.name == 'ecuacc4ever' }}"><div><small>{{ @game.cutoff_time }}</small></div></check>
           </td>
         </tr>
         </repeat>
@@ -43,5 +86,10 @@
   </div>
   <input type="hidden" name="uid" value="{{ @user.uid }}" />
   <input type="hidden" name="token" value="{{ @SESSION.csrf }}" />
+  <input type="hidden" name="week" value="{{ @pickem_week.week }}" />
+  <input type="hidden" name="slate_count" value="{{ count(@pickem_slate) }}" />
+  
+  <check if="{{ @pickem_week.open == 'Y' }}">
   <button type="submit" class="btn btn-primary">Submit Picks</button>
+  </check>
 </form>

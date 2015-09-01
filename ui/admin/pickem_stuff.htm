@@ -1,4 +1,40 @@
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingAlpha">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseAlpha" aria-expanded="true" aria-controls="collapseAlpha">
+          Pickem Standings
+        </a>
+      </h4>
+    </div>
+    <div id="collapseAlpha" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingAlpha">
+    	<div class="panel-body">
+    		<div class="row">
+    		<form action="{{ 'reset_pickem_standings' | alias }}" method="POST" class="form-inline col-sm-12">
+    			<fieldset>
+    				<p>Press the button below to initialize or reset the standings for the current week:</p>
+					  <div class="form-group">
+					    <label class="sr-only" for="standingsPickemWeek">Clear picks for week</label>
+					    <div class="input-group">
+					      <div class="input-group-addon">Select Pickem</div>
+					      <select id="standingsPickemWeek" class="form-control" name="pickem_id">
+					      	<option value="1">ACCbbs FB Pick'em 2015</option>
+					      </select>
+					    </div>
+					    <div class="input-group">
+					      <div class="input-group-addon">Select Week</div>
+					      <select class="form-control" name="week">
+					      	<option>1</option>
+					      </select>
+					    </div>
+					  </div>
+					  <button type="submit" class="btn btn-primary">Initialize/Reset Standings</button>
+					</fieldset>     			
+    		</form>
+      	</div>    		
+    	</div>
+		</div>		
+	</div>
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
       <h4 class="panel-title">
@@ -7,7 +43,7 @@
         </a>
       </h4>
     </div>
-    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
       	<div class="row">
       		<form action="{{ 'close_pickem_week' | alias }}" method="POST" class="form-inline col-sm-12">

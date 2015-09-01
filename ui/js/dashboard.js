@@ -17,6 +17,8 @@
 	});
 	
 	$('#gameGameDate').datetimepicker({sideBySide: true});
+	$('#newGameGameDate').datetimepicker({sideBySide: true});
+	
 	$("[data-date-value]").each(function(n, e) {
 		aMoment = moment($(e).attr('data-date-value'));
 		$(e).parent('#gameGameDate').data('DateTimePicker').defaultDate(aMoment);
@@ -65,9 +67,11 @@
 	
 	$('.team-typeahead').typeahead({
 		minLength	: 2,
+		items : 20,
 		source: function(q, process) {
+			var unix = Math.round(+new Date()/1000);
 			return $.getJSON(
-				'/team-typeahead/' + q,
+				'/team-typeahead/' + q + '?' + unix,
 				function (data) {
 					return process(data);
 				});
@@ -93,4 +97,70 @@
     }
 	});
 	
+	$('.location-typeahead').typeahead({
+		minLength	: 2,
+		items : 20,
+		source: function(q, process) {
+			var unix = Math.round(+new Date()/1000);
+			return $.getJSON(
+				'/gamelocation-typeahead/' + q + '?' + unix,
+				function (data) {
+					return process(data);
+				});
+		}
+	}).change(function() {
+		var current = $(this).typeahead('getActive');
+		var data_target;
+		var current_val = $(this).val();
+
+    if (current) {
+        // Some item from your model is active!
+        if (current.name == $(this).val()) {
+            // This means the exact match is found. Use toLowerCase() if you want case insensitive match.
+					//data_target = $(this).attr('data-target');
+					//$(data_target).val(current.machinename);
+
+        } else {
+            // This means it is only a partial match, you can either add a new item 
+            // or take the active if you don't want new items
+        }
+    } else {
+        // Nothing is active so it is a new value (or maybe empty value)
+    }
+	});
+	
+	$('a.toggleGameStatus').on('click', function(evt) {
+		debugger;
+		var gamestatus = $(this).attr('data-gamestatus'),
+			  target_eid = $(this).attr('data-target-eid'),
+			  $this = $(this);
+			  
+		$.ajax({
+			url : '/admin/game/toggle-status',
+			data : { eid : target_eid, hide_from_pickem : gamestatus },
+			type : 'POST',
+			dataType : 'json',
+			success : function (data, txtStatus, o) {
+				$this.parent('TD.status-aware').toggleClass('warning', gamestatus == 0);
+				$('span[aria-hidden]', $this)
+					.removeClass()
+					.addClass(function() {
+						icon = (gamestatus == 1) ? 'plus-sign' : 'remove-circle'
+						return 'glyphicon glyphicon-' + icon;
+					});
+				label = (gamestatus == 1) ? 'Add to Pickem' : 'Remove from Pickem';
+				$('span.link-title', $this).html( label );
+			},
+			error : function (o, status, err) {
+				debugger;
+			}
+		})
+	});
+	
+	
+	//-------------- TEAM LOGOS as TRIGGERS -------------------//
+	$('IMG[data-toggle="pickem"]').on('click', function(evt) {
+		var target = $(this).attr('data-target');
+		$(target + ' option[value="' + $(this).attr('data-teamname') + '"]').prop('selected', true);
+	})
 })(jQuery);

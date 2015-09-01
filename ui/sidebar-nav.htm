@@ -1,7 +1,7 @@
           <ul class="nav nav-sidebar">
           <repeat group="{{ @menu_all_users }}" value="{{ @item }}">
             <li <check if="{{ @item.active }}">class="active"</check>>
-            	<a href="{{ @item.path }}">{{ @item.label }}<check if="{{ @item.active }}"><span class="sr-only">(current)</span></check></a>
+            	<a href="{{ @item.path }}"<check if="{{ isset(@item.disabled) }}"> class="disabled"</check>>{{ @item.label }}<check if="{{ @item.active }}"><span class="sr-only">(current)</span></check></a>
             </li>
           </repeat>
           </ul>

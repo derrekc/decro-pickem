@@ -6,17 +6,38 @@
 	</div>
 </check>
 <form action="{{ 'user_profile_save' | alias }}" method="POST" enctype="multipart/form-data">
-<fieldset class="form-inline" style="margin-bottom: 1em;">
-	<legend>The Basics</legend>
+<div class="form-horizontal" style='margin-bottom: 2em;'>
   <div class="form-group">
-    <label for="pickemUserName">Name</label>
-    <input type="text" class="form-control" id="pickemUserName" name="user_id" placeholder="Jane Doe" value="{{ @edit_user.name }}">
+    <label class="col-sm-3 control-label" for="pickemUserName">Name</label>
+    <div class="col-sm-6">
+    	<input type="text" class="form-control" id="pickemUserName" name="user_id" placeholder="Jane Doe" value="{{ @edit_user.name }}">
+    </div>
   </div>
   <div class="form-group">
-    <label for="pickemUserEmail">Email</label>
-    <input type="email" class="form-control" id="pickemUserEmail" name="mail" placeholder="jane.doe@example.com" value="{{ @edit_user.mail }}">
+    <label class="col-sm-3 control-label" for="pickemUserEmail">Email</label>
+    <div class="col-sm-6">
+	    <input type="email" class="form-control" id="pickemUserEmail" name="mail" placeholder="jane.doe@example.com" value="{{ @edit_user.mail }}">
+    </div>
   </div>
-</fieldset>
+
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="pickemDefaultPickSetting">Default Pick Setting</label>
+		<div class="col-sm-4">
+			<select class="form-control" id="pickemDefaultPickSetting" name="default_pick">
+				<option value="hostteam">Home Team</option>
+			</select>
+		</div>
+	</div>
+	
+	<check if="{{ isset(@schools) }}">
+	<div class="form-group">
+		<label class="col-sm-3 control-label" for="favoriteSchool">Primary Favorite ACC School</label>
+		<div class="col-sm-4">
+			{{ @team_chooser | raw }}
+		</div>
+	</div>
+	</check>
+</div>
 <fieldset class="form-inline" style="margin-bottom: 1em;">
 	<legend>Change Password</legend>
   <div class="form-group">

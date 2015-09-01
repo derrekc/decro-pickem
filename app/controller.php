@@ -40,13 +40,6 @@ abstract class Controller {
 		if ($this->use_json === TRUE) {
 			return;
 		}
-
-		$f3->set('error_message', false);
-		if ($f3->exists('SESSION.error_message')) {
-			$f3->set('error_message', $f3->get('SESSION.error_message'));
-		}
-
-		$f3->clear('SESSION.error_message');
 		$this->do_render($f3);
 	}
 	
@@ -54,7 +47,8 @@ abstract class Controller {
 	function __construct() {
 		$f3=Base::instance();
 		// Connect to the database
-		$db=new DB\SQL($f3->get('db.0'), $f3->get('db.1'), $f3->get('db.2'));
+		$db = new DB\SQL($f3->get('db.0'), $f3->get('db.1'), $f3->get('db.2'));
+		$f3->set('db', $db);
 		if (file_exists('setup.sql')) {
 			// Initialize database with default setup
 			$db->exec(explode(';',$f3->read('setup.sql')));

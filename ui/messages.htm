@@ -16,3 +16,43 @@
   	{{ @error_message }}		
 	</div>	
 </check>
+
+<check if="{{ !empty(@success_msg) }}">
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <span class="sr-only">Error:</span>
+  	<repeat group="{{ @success_msg }}" value="{{ @msg }}">
+  	<p><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> {{ @msg | raw }}</p>
+  	</repeat>
+	</div>	
+</check>
+
+<check if="{{ !empty(@warning_msg) }}">
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <span class="sr-only">Error:</span>
+  	<repeat group="{{ @warning_msg }}" value="{{ @msg }}">
+  	<p><span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> {{ @msg | raw }}</p>
+  	</repeat>
+	</div>	
+</check>
+
+<check if="{{ !empty(@error_msg) }}">
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <span class="sr-only">Error:</span>
+  	<repeat group="{{ @error_msg }}" value="{{ @msg }}">
+  	<p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{ @msg | raw }}</p>
+  	</repeat>
+	</div>	
+</check>
+
+<check if="{{ !empty(@info_msg) }}">
+	<div class="alert alert-info alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <span class="sr-only">Error:</span>
+  	<repeat group="{{ @info_msg }}" value="{{ @msg }}">
+  	<p><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> {{ @msg | raw }}</p>
+  	</repeat>
+	</div>	
+</check>
