@@ -1,0 +1,33 @@
+<a class="btn btn-primary" href="{{ 'current_slate' | alias }}">Return to Picks</a>
+
+<div class="table-responsive">
+  <table class="table table-hover pickem-slate">
+    <thead>
+      <tr>
+      	<th width="160">&nbsp;</th>
+        <th class="hidden-xs hidden-sm">Game</th>
+        <th>{{ @player_1.name }}</th>
+        <th>{{ @player_2.name }}</th>
+      </tr>
+    </thead>
+    <tbody>
+    	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
+      <tr>
+      	<td width="160">
+      		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.visiting_team_name }}" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
+      		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.host_team_name }}" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
+      	</td>
+        <td class="hidden-xs hidden-sm">
+        	<strong>{{ @game.visiting_team }} {{ @game.vs_at_symbol }} {{ @game.host_team }}</strong>
+        </td>
+        <td>
+        	<img height="32" src="/assets/logos/ncaaf/{{ @game.pick_1 }}.gif" />
+        </td>
+        <td>
+        	<img height="32" src="/assets/logos/ncaaf/{{ @game.pick_2 }}.gif" />
+        </td>
+      </tr>
+      </repeat>
+    </tbody>
+  </table>
+</div>

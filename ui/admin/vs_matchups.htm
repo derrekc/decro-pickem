@@ -1,0 +1,11 @@
+<div class="table-responsive">
+	<table class="table table-hover">
+		<repeat group="{{ @matchups }}" key="{{ @week }}" value="{{ @matches }}">
+		<tbody>
+			<repeat group="{{ @matches }}" key="{{ @thisone }}" value="{{ @opps }}">
+			<tr><td>{{ @opps }}</td></tr>
+			</repeat>
+		</tbody>
+		</repeat>
+	</table>
+</div>

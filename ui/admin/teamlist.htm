@@ -1,0 +1,36 @@
+          <div class="table-responsive">
+            <table class="table table-striped table-hover small teamlist">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Display Name<br />Used on site</th>
+                  <th>Nickname</th>
+                  <th>Machine Name</th>
+                  <th>Conference</th>
+                  <th>Twitter Hashtag</th>
+
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              	<repeat group="{{ @teamList.subset }}" value="{{ @team }}">
+                <tr>
+                  <td>{{ @team.title }}</td>
+                  <td>{{ @team.displaytitle }}</td>
+                  <td>{{ @team.nickname }}</td>
+                  <td>{{ @team.name }}</td>
+                  <td>{{ @team.conf_name }}</td>
+                  <td>{{ @team.twitter_hashtag }}</td>
+                  <td>
+                  	<div class="btn-group btn-group-sm" role="group">
+                  		<a class="btn btn-default" href="#">
+                  			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  		</a>
+                  	</div>
+                  </td>
+                </tr>
+                </repeat>
+              </tbody>
+            </table>
+          </div>
+					<F3:pagebrowser items="{{ @teamList.total }}" limit="{{ @teamList.limit }}"/>

@@ -1,0 +1,37 @@
+<h3>Active Players</h3>
+<div class="table-responsive">
+	<table class="table table-hover table-striped small">
+		<thead>
+			<tr>
+				<th>&ndash;</th>
+				<th>Player</th>
+				<th>Week</th>
+				<th>Picks<br />Initially Saved</th>
+				<th>Picks<br />Updated</th>
+				<th>Picks<br />Made</th>
+			</tr>
+		</thead>
+		<tbody>
+		<repeat group="{{ @players }}" value="{{ @p }}">
+			<tr>
+				<td class="text-right" width="10">{{ @p.uid }}</td>
+				<td>{{ @p.playername }}</td>
+				<td>{{ @p.week }}</td>
+				<td>{{ @p.completed_datetime }}</td>
+				<td>
+					<check if="{{ @p.updated_stamp == 0 }}">
+					<true>&ndash;</true>
+					<false>{{ @p.updated_datetime}}</false>
+					</check>
+				</td>
+				<td>{{ @p.pick_count }}</td>
+			</tr>
+		</repeat>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="6"><strong>Active Players for week {{ @current_week }}: </strong>{{ @player_count }}</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>

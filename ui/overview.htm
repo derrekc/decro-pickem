@@ -1,0 +1,87 @@
+<div class="row">
+	<div class="col-sm-5 pull-right">
+		<h4>When We Last Saw #goacc...</h4>
+		<img src="/assets/goacc/YCbBBbZ.jpg" width="100%" class="responsive img-thumbnail" />
+		<hr />
+		<p>Players for this pick'em have typically come from members of the world-renowed <a href="">ACCbbs fan forum</a>.</p>
+		<h4>Past Champions</h4>
+		<table class="table table-condensed table-striped">
+			<thead>
+				<tr>
+					<th width="60">Season</th>
+					<th>Champion</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>2015</td>
+					<td>?</td>
+				</tr>
+				<tr>
+					<td>2014</td>
+					<td>Kaplony</td>
+				</tr>
+				<tr>
+					<td>2013</td>
+					<td>4x4hokies</td>
+				</tr>
+				<tr>
+					<td>2012</td>
+					<td>ecuacc4ever</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div class="col-sm-7 pull-left">
+	<p class="lead">Welcome to a new season of ACC Football, and with that, a new season of your favorite ACC pastime -- 
+	<strong>The 4th Annunal ACCbbs Football Pick'em</strong>.</p>
+	
+	<check if="{{ @user.status == 1}}">
+	<false>
+		<div><a href="{{ 'user_register' | alias }}" class="btn btn-primary btn-lg">Sign Up Now!</a></div>
+		<hr />
+	</false>
+	</check>
+</check>
+
+	<check if="{{ isset(@pickem_slate )}}">
+	<h4>Games We're Picking For Week {{ @pickem.current_week }}</h4>
+  <div class="table-responsive">
+    <table class="table table-hover table-condensed pickem-slate">
+      <thead>
+        <tr>
+        	<th width="160" class="hidden-xs hidden-sm">&nbsp;</th>
+          <th>Game</th>
+          <th>Date</th>
+          <th>Kickoff/<br />Winner</th>
+        </tr>
+      </thead>
+      <tbody>
+      	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
+        <tr>
+        	<td width="160" class="hidden-xs hidden-sm">
+        		<img height="32" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
+        		<img height="32" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
+        	</td>
+          <td>
+          	<strong>{{ @game.visiting_team }} {{ @game.vs_at_symbol }} {{ @game.host_team }}</strong><br />
+          	<small>{{ @game.location }}</small>
+          </td>
+          <td>{{ @game.game_date_short }}</td>
+          <td>{{ @game.kickoff_time }}</td>
+        </tr>
+        </repeat>
+      </tbody>
+    </table>
+  </div>
+	<check if="{{ @user.status == 1}}">
+	<true>
+		<div><a href="{{ 'current_slate' | alias }}" class="btn btn-primary btn-block hidden-md hidden-lg">Make Your Picks</a></div>
+	</true>
+	<false>
+		<div><a href="{{ 'user_register' | alias }}" class="btn btn-primary btn-block">Sign Up Now!</a></div>
+	</false>
+	</check>
+</check>
+</div>
