@@ -22,7 +22,7 @@ class JsonController extends Controller {
 	function gamelocation_typeahead($f3, $args) {
 		$location = strtolower($args['q']);
 		$query = "
-			SELECT location  
+			SELECT DISTINCT(location)  
 			FROM sportsevent 
 			WHERE 
 				(

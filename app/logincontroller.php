@@ -12,7 +12,6 @@ class LoginController extends Controller {
 	}
 	
 	public function do_render($f3) {
-		echo "do render\n";
 		echo Template::instance()->render('dashboard.htm');			
 	}
 
@@ -36,12 +35,22 @@ class LoginController extends Controller {
 					dump(),'image/png'));
 		}
 		#echo Template::instance()->render('login.htm');
-		$q = "SELECT * FROM game WHERE week = :week AND hide_from_pickem = 0 ORDER BY event_date";
-		$pickem_slate = $this->db->exec($q, array(':week' => $f3->get('pickem.current_week')));
+
+		$lookup_key = sprintf("pickem.%s.current_week", $f3->get('pickem.default_pickem_id'));
+		$current_week = $f3->get($lookup_key);
+		$f3->set('current_week', $current_week);
+		$f3->set('week', $current_week);
 		
+		$pickem_slate = \Dashboard\Model\Pickem::pickem_slate($current_week);
+		
+		$f3->set('pickem_slate_public', $pickem_slate);
+		$f3->set('player_pickem_slate', $pickem_slate);
+		
+		$standings = \Dashboard\Model\Pickem::standings($pickem_id, $f3->get('pickem.standings_week'));
+		$f3->set('standings', $standings);
+
 		$content = Template::instance()->render('login.htm');
 		$f3->set('content', $content);
-		$f3->set('pickem_slate', $pickem_slate);
 		$f3->set('inc', 'overview.htm');
 	}
 

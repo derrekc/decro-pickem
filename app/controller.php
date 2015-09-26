@@ -12,6 +12,9 @@ abstract class Controller {
 	protected
 		$use_json = FALSE;
 		
+	protected
+		$user = FALSE;
+		
 	abstract protected function do_render($f3);
 	abstract protected function prepareUserMenu($f3);
 		
@@ -32,6 +35,7 @@ abstract class Controller {
 			$user = FALSE;
 		}
 		$f3->set('user', $user);
+		$this->user = $user;
 	}
 
 	//! HTTP route post-processor

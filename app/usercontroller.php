@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Note: md5('changeme') = '4cb9c8a8048fd02294477fcb1a41191a'
+ */
 class UserController extends DashboardController {
 	
 	public function beforeroute($f3) {
@@ -43,11 +46,33 @@ class UserController extends DashboardController {
 	}
 	
 	public function register_form($f3) {
+		$now = time();
+		
+		if (!$f3->exists('REQUEST.pickem_id', $pickem_id)) {
+			$pickem_id = $f3->get('pickem.default_pickem_id');	
+		}
+		
+		$lookup = "pickem." . $pickem_id;
+		$current_week = $f3->get($lookup . ".current_week");
+		
+		$game = new \DB\SQL\Mapper($this->db, 'game');
+		$game->load(array('week=?', $current_week), array('order' => 'event_date ASC', 'limit' => 1));
+				
+		$register_cutoff = ((int) $f3->get($lookup . ".register_cutoff")) * 60;
+		
+		$disabled_flag = ($game->event_date - $now) < $register_cutoff ? ' disabled' : '';
+		if ($disabled_flag) {
+			$f3->push('SESSION.warning_msg', 'Registration for Week '. $current_week . ' games is now closed.  You will be able to register when the games are completed.');
+		}
+		
+		$pickem = new \DB\SQL\Mapper($this->db, 'pickem');
+		
 		$img=new Image;
 		$f3->set('captcha',$f3->base64(
 			$img->captcha('fonts/thunder.ttf',18,5,'SESSION.captcha')->
 				dump(),'image/png'));
 		
+		$f3->set('disabled_flag', $disabled_flag);
 		$f3->set('team_chooser', $f3->get('team_chooser')->render(NULL));
 		$f3->set('inc', 'userreg.htm');
 	}
@@ -200,6 +225,7 @@ class UserController extends DashboardController {
 		}
 				
 		$user->favorite_team_name = $POST['favorite_team_name'] == '' ? NULL : $POST['favorite_team_name'];
+		$user->default_pick = $POST['default_pick'];
 		$user->save();
 		$f3->set("SESSION.success_message", 'Your changes have been saved.  Good job!');
 		$f3->reroute('@user_profile(@uid=' . $user->uid . ')');
