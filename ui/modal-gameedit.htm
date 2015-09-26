@@ -15,17 +15,39 @@
                       <span class="glyphicon glyphicon-calendar"></span>
                   </span>
               </div>				    		
-			    	</div>
+			    	</div>				
+						<div class="form-group">
+							<label for="tvnetwork" class="col-sm-1">TV</label>
+
+								<select id="gameTV" name="tv" class="form-control">
+									<option value="">-- SELECT ONE NETWORK--</option>
+									<repeat group="{{ @tv_network.tv }}" key="{{ @netkey }}" value="{{ @network }}">
+									<option value="{{ @netkey}}">{{ @network }}</option>
+									</repeat>
+								</select>
+								<p class="help-block small">Select the 'single' primary network</p>
+
+
+								<input type="text" class="form-control" id="gameTVSecondary" name="tv_secondary" placeholder="Enter combo networks here"/>
+								<p class="help-block small">e.g. ABC/ESPN/ESPN2</p>
+
+						</div>
 			    </div>
 			    <div id="game-score">
-					  <div class="form-group">
-					    <label for="visitingScore"></label>
-					    <input type="text" class="form-control" id="visitingScore" name="visiting_score" placeholder="0">
-					  </div>				    	
-					  <div class="form-group">
-					    <label for="hostScore"></label>
-					    <input type="text" class="form-control" id="hostScore" name="host_score" placeholder="0">
-					  </div>				    					    	
+			    	<div class="row">
+			    		<div class="col-xs-6">
+							  <div class="form-group">
+							    <label for="visitingScore"></label>
+							    <input type="text" class="form-control" id="visitingScore" name="visiting_score" placeholder="0">
+							  </div>				    	
+			    		</div>
+			    		<div class="col-xs-6">
+							  <div class="form-group">
+							    <label for="hostScore"></label>
+							    <input type="text" class="form-control" id="hostScore" name="host_score" placeholder="0">
+							  </div>				    					    				    			
+			    		</div>
+			    	</div>
 					  <div class="form-group">
 					    <label for="overtimes">Overtimes</label>
 					    <input type="number" class="form-control" id="overtimes" name="overtimes" placeholder="0">

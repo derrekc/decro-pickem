@@ -1,0 +1,27 @@
+<div class="row">
+<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
+	<div class="col-md-2 col-sm-4 col-xs-6">
+		<div class="well well-sm">
+			<div class="row">
+				<div class="col-xs-6">
+					<img src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" class="img-thumbnail img-responsive"/>
+				</div>
+				<div class="col-xs-6">
+					<img src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" class="img-thumbnail img-responsive"/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 text-center">
+					<div class="h3">{{ @game.picks.visiting_team_pct }}</div>
+				</div>
+				<div class="col-xs-6 text-center">
+					<div class="h3">{{ @game.picks.host_team_pct }}</div>
+				</div>
+				<div class="col-xs-12 text-center">
+					<a class="btn btn-xs btn-default" href="{{ 'picks_breakdown_game', 'eid=' . @game.eid | alias }}">More..</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</repeat>
+</div>

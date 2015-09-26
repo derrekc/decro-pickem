@@ -19,7 +19,23 @@ class PickemSlateHelper {
 		//}
 		
 		if ($day == 'saturday') {
-			return ($first_saturday_kickoff - $now) > $cutoff_seconds;
+			if (($first_saturday_kickoff - $now) > $cutoff_seconds) {
+				error_log(print_r(
+					array("returning TRUE"),
+					TRUE
+				));
+				return TRUE;
+			} else {
+				error_log(print_r(
+					array(
+						'msg' => "returning FALSE", 
+						'first_saturday_kickoff' => date('r', $first_saturday_kickoff),
+						'test_result' => $first_saturday_kickoff - $now,
+					),
+					TRUE
+				));
+				return FALSE;
+			}
 		}
 		return ($pickem_game->event_date - $now) > $cutoff_seconds; 
 	}

@@ -1,0 +1,22 @@
+<div class="row">
+	<check if="{{ !empty(@leadmsg )}}">
+	<p class="col-xs-12">{{ @leadmsg }}</p>
+	</check>
+<repeat group="{{ @appearances }}" value="{{ @t }}">
+	<div class="col-md-2 col-sm-4 col-xs-4">
+		<div class="well well-sm">
+			<div class="row">
+				<div class="col-xs-8">
+					<a href="#" class="genmodal-trigger" data-url="{{ 'team_appearances_team', '@teamname='.@t.team_name | alias }}"><img src="/assets/logos/ncaaf/{{ @t.team_name }}.gif" class="img-thumbnail img-responsive"/></a>
+				</div>
+				<div class="col-xs-4 text-center">
+					<div class="h3 text-center">{{ @t.appearances }}</div>
+				</div>
+			</div>
+			<div class="row" style="margin-top: 0.3em;">
+				<div class="col-xs-12 text-center small">{{ @t.displaytitle }}</div>
+			</div>
+		</div>
+	</div>
+</repeat>
+</div>

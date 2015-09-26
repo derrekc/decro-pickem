@@ -15,10 +15,13 @@
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/ui/css/bootstrap-overrides.css" />
     <link href="/ui/css/bootstrap-datetimepicker.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    <link href="/ui/css/dashboard.css" rel="stylesheet">
+    <link href="/ui/css/dashboard.css" rel="stylesheet" />
+    <link href="/ui/css/colorbox.css" rel="stylesheet" />
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -42,20 +45,28 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">{{ @site }}</a>
+          <a class="navbar-brand" href="/"><strong>{{ @site }}</strong></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ 'welcome' | alias }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>&nbsp;Dashboard</a></li>
+            <!--li><a href="{{ 'welcome' | alias }}"><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>&nbsp;Dashboard</a></li-->
             <!--li><a href="#">Settings</a></li-->
             <check if="{{ @user }}">
             	<true>
             		<li><a href="{{ 'current_slate' | alias }}" title="Make Your Picks">Make Your Picks</a></li>
+	            	<check if="{{ @user.isadmin == 'Y' }}">
+	            		<li class="dropdown">
+	            			<a href="#" class='dropdown-toggle' data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+	            			<ul class="dropdown-menu">
+	            				<li><a href="{{ 'player_status' | alias }}">Player Status</a></li>
+	            				<li><a href="{{ 'pickem_stuff' | alias }}">Pickem Management</a></li>
+	            			</ul>
+	            		</li>
+	            	</check>
             		<li><a href="{{ 'user_profile', 'uid=' . @user.uid | alias }}">Profile</a></li>
             		<li><a href="/logout" title="Logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout</a></li>
             	</true>
             </check>
-            
           </ul>
           <!--form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -94,6 +105,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.6.3/jquery.colorbox-min.js"></script>
     <script src="/ui/js/moment.min.js"></script>
     <script src="/ui/js/bootstrap-datetimepicker.js"></script>
     <script src="/ui/js/bootstrap3-typeahead.min.js"></script>

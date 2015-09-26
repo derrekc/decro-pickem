@@ -1,0 +1,18 @@
+<div class="btn-group btn-group-sm" role="group">
+	<check if="{{ @show_all }}">
+	<a href="{{ @target_path }}" 
+		 class="btn btn-default<check if="{{ @ws_current_week == 0 || @ws_current_week === FALSE}}"> btn-info</check>">{{ @show_all_label }}</a>
+	</check>
+<repeat group="{{ @all_weeks }}" value="{{ @w }}">
+	<check if="{{ @route_arg }}">
+		<true>
+		<a href="{{ @target_path }}/{{ @w.week }}" 
+			 class="btn btn-default<check if="{{ @ws_current_week == @w.week }}"> btn-info</check><check if="{{ @ws_default_week == @w.week }}"> btn-primary</check>">{{ @w.week }}</a>
+		</true>
+		<false>
+		<a href="{{ @target_path }}?week={{ @w.week }}" 
+			 class="btn btn-default<check if="{{ @ws_current_week == @w.week }}"> btn-info</check><check if="{{ @ws_default_week == @w.week }}"> btn-primary</check>">{{ @w.week }}</a>
+		</false>
+	</check>
+</repeat>
+</div>

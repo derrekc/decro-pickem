@@ -10,6 +10,7 @@ $f3->config('app/config.ini');
 $f3->config('app/routes.ini');
 
 \Template::instance()->extend('pagebrowser', '\Pagination::renderTag');
+\Template::instance()->extend('week_btngroup', '\WeekSelect::renderButtonGroup');
 
 // Execute application
 $f3->run();

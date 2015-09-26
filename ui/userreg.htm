@@ -1,32 +1,34 @@
 <form class="form" action="{{ user_reg_submit | alias }}" method="POST">
 	<div class="form-group">
 		<label for="userRegUserID">User ID</label>
-		<input type="text" class="form-control" id="userRegUserID" name="user_id" placeholder="User ID" />
+		<input type="text" class="form-control" id="userRegUserID" name="user_id" placeholder="User ID" {{ @disabled_flag }} />
 	</div>
 	<div class="form-group">
 		<label for="userRegEmail">E-mail</label>
-		<input type="email" class="form-control" id="userRegEmail" name="mail" placeholder="E-mail address" />
+		<input type="email" class="form-control" id="userRegEmail" name="mail" placeholder="E-mail address" {{ @disabled_flag }} />
 	</div>
 	<div class="form-group">
 		<label for="userRegPass">Password</label>
-		<input type="password" class="form-control" autocomplete="off" id="userRegPass" name="pass" />
+		<input type="password" class="form-control" autocomplete="off" id="userRegPass" name="pass" {{ @disabled_flag }} />
 		<span id="helpBlock" class="help-block">CSNbbs Members - I recommend using your CSNbbs password.</span>
 	</div>
 	<div class="form-group">
 		<label for="userRegPassVerify">Verify Password</label>
-		<input type="password" class="form-control" autocomplete="off" id="userRegPassVerify" name="pass_verify" />
+		<input type="password" class="form-control" autocomplete="off" id="userRegPassVerify" name="pass_verify" {{ @disabled_flag }}/>
 	</div>
 	<div class="form-group">
 		<label class="control-label" for="favoriteSchool">Primary Favorite ACC School</label>
 		{{ @team_chooser | raw }}
+		<span class="help-block">ACC fans - select your favorite ACC team.  Fans of other conferences, feel free to select your favorite team.</span>
 	</div>
 
 	<div class="form-group">
 		<p>
 			<label for="captcha"><small>CAPTCHA</small></label><br />
 			<img src="{{ @captcha }}" title="captcha" />
-			<input id="captcha" name="captcha" type="text" />
+			<input id="captcha" name="captcha" type="text"  {{ @disabled_flag }}/>
 		</p>
 	</div>
-	<button type="submit" class="btn btn-primary">Sign Me Up!</button>
+	<input type="hidden" name="pickem_id" value="{{ @pickem_id }}" />
+	<button type="submit" class="btn btn-primary" {{ @disabled_flag }}>Sign Me Up!</button>
 </form>

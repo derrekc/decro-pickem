@@ -1,0 +1,63 @@
+
+<!-- Split button -->
+<div class="btn-toolbar" style="margin-bottom: 1em;">
+	<F3:week_btngroup current_week="{{ @pickem_week.week }}" path="/picks" pickem_id="{{ @pickem_id }}" route_arg="TRUE" show_all="TRUE" show_all_label="Show Current Picks"/>
+	<div class="btn-group btn-group-sm">
+	  <a href="{{ 'current_slate' | alias }}" class="btn btn-primary">This Week's Picks</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="bg-info" style="padding: 10px">
+		<strong>Correct: </strong><span>{{ @pickem_player_data.correct }}</span><br />
+		<strong>Incorrect: </strong><span>{{ @pickem_player_data.incorrect }}</span>
+		</div>
+	</div>
+</div>
+<form method="POST" action="{{ 'post_picks' | alias }}">
+  <div class="table-responsive">
+    <table class="table table-hover pickem-slate">
+      <thead>
+        <tr>
+        	<th width="160">&nbsp;</th>
+          <th class="hidden-xs hidden-sm">Game</th>
+          <th>Your Pick</th>
+          <th>Result</th>
+          <th class="text-center hidden-xs hidden-sm">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+      	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
+        <tr>
+        	<td width="160">
+        		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.visiting_team_name }}" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
+        		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.host_team_name }}" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
+        	</td>
+          <td class="hidden-xs hidden-sm">
+        		<strong>{{ @game.visiting_team_title }} - {{ @game.visiting_score}}</strong>, 
+        		<strong>{{ @game.host_team_title }} - {{ @game.host_score }}</strong>
+          </td>
+          <td>
+         		<img height="32" src="/assets/logos/ncaaf/{{ @game.pick_team_name }}.gif" />
+         	</td>
+         	<td>
+      			<check if="{{ @game.correct == 'Y' }}">
+        			<true>
+        				<span class="text-success"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="font-size: 24px;"></span></span>
+        			</true>
+        			<false>
+        				<span class="text-danger"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="font-size: 24px;"></span></span>
+        			</false>
+      			</check>
+          </td>
+          <td class="hidden-sm hidden-xs text-right">&nbsp;</td>
+        </tr>
+        </repeat>
+      </tbody>
+    </table>
+  </div>
+  <input type="hidden" name="uid" value="{{ @user.uid }}" />
+  <input type="hidden" name="token" value="{{ @SESSION.csrf }}" />
+  <input type="hidden" name="slate_count" value="{{ count(@pickem_slate) }}" />
+</form>

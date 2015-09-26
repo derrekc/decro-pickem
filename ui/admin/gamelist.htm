@@ -1,14 +1,16 @@
           <div class="row">
-          	<div class="col-sm-6">
-          		<div class="btn-group" role="group" aria-label="game-list">
-          			<a class="btn btn-default" role="button" data-toggle="collapse" href="#quickAddGameForm">
-          				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Game
-          			</a>
-          			<include href="widgets/week_dropdown.htm" />
+          	<div class="col-sm-11">
+          		<div class="btn-toolbar" role="toolbar" style="margin-bottom: 0.5em;">
+	          		<div class="btn-group btn-group-sm" role="group" aria-label="game-list">
+	          			<a class="btn btn-primary" role="button" data-toggle="collapse" href="#quickAddGameForm">
+	          				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Game
+	          			</a>
+	          		</div>
+	          		<F3:week_btngroup current_week="{{ @week }}" pickem_id="{{ @pickem_id }}"  />
           		</div>
           	</div>
           </div>
-          
+
 					<form action="{{ 'game_create_quick' | alias }}" id="quickAddGameForm" method="POST" class="form-inline collapse">
 						<div class="well well-sm">
 							<div class="row">
@@ -43,9 +45,23 @@
 											<option>2018</option>
 											<option>2019</option>
 											<option>2020</option>
+											<option>2021</option>
 										</select>
 									</div>									
 								</div>
+								
+								<div class="col-sm-3">
+									<div class="form-group">
+										<label for="tv" class="control-label">TV</label>
+										<select class="form-control input-sm" name="tv" id="tv">
+										<option value="">-- SELECT --</option>
+										<repeat group="{{ @tv_network.tv }}" key="{{ @netkey }}" value="{{ @network }}">
+										<option value="{{ @netkey}}" <check if="{{ strtolower(@edit_game.tv) == @netkey }}">SELECTED</check>>{{ @network }}</option>
+										</repeat>
+										</select>
+									</div>									
+								</div>
+
 								<div class="col-sm-7">
 								  <div class="form-group">
 								  	<label for="gameGameDate" class="control-label">Date/Kickoff</label>
@@ -56,14 +72,23 @@
 								  		</span>
 								  	</div>
 								  </div>
+								  <div class="checkbox">
+								  	<label>
+								  		<input type="checkbox" value="Y" name="hide_from_pickem" class="form-control input-sm"/> Exclude From Pickem
+								  	</label>
+								  </div>
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
 									<input type="hidden" id="hostTeamName" name="host_team_name" />
 									<input type="hidden" id="visitingTeamName" name="visiting_team_name" />
 									<input type="hidden" name="sport" value="ncaaf" />
 									<input type="hidden" name="create_method" value="quick" />
-								  <button type="submit" class="btn btn-primary btn-sm">Add Game</button>
-								</div>
-							</div>
-							<div class="row">
+									<input type="hidden" name="return_to" value="{{ @URI }}" />
+								  <button type="submit" class="btn btn-default btn-sm">Add Game</button>
+								 </div>
 						  </div>
 					  </div>
 					</form>
@@ -72,6 +97,7 @@
             <table class="table table-hover small gamelist">
               <thead>
                 <tr>
+                	<th>Wk</th>
                   <th>Host</th>
                   <th>&nbsp;</th>
                   <th>Visitor</th>
@@ -79,13 +105,14 @@
                   <th>Date</th>
                   <th>Time</th>
                   <th class="hidden-xs hidden-sm">Location</th>
+                  <th class="hidden-xs hidden-sm">Pickems</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
               	<repeat group="{{ @gameList.subset }}" value="{{ @game }}">
               	
-            		<check if="{{ @game.hide_from_pickem == '0' }}">
+            		<check if="{{ !empty(@assigned_pickems[@game.eid]) }}">
             			<true>
             				<set glyphclass="remove-circle" linktitle="Remove From Pickem" gamestatus="1" rowclass=" "/>
             			</true>
@@ -94,13 +121,19 @@
             			</false>
             		</check>
                 <tr>
+                	<td class="text-right status-aware {{ @rowclass }}">{{ @game.week }}</td>
                   <td class="status-aware {{ @rowclass }}">{{ @game.host_team }}</td>
-                  <td class='bg-info text-right'>&ndash;</td>
+                  <td class='bg-info text-right'>{{ @game.host_score }}</td>
                   <td class="status-aware {{ @rowclass }}">{{ @game.visiting_team }}</td>
-                  <td class='bg-info text-right'>&ndash;</td>
+                  <td class='bg-info text-right'>{{ @game.visiting_score }}</td>
                   <td class="status-aware {{ @rowclass }}">{{ @game.game_date_short }}</td>
                   <td class="status-aware {{ @rowclass }}">{{ @game.kickoff_time }}</td>
                   <td class="hidden-xs hidden-sm {{ @rowclass }}">{{ @game.location }}</td>
+                  <td class="hidden-xs hidden-sm {{ @rowclass }}">
+                  <repeat group="{{ @assigned_pickems[@game.eid] }}" value="{{ @apickem }}">
+                  <div>{{ @apickem.title }}</div>	
+                  </repeat>
+                  </td>
                   <td class="status-aware {{ @rowclass }}">
                   	<div class="btn-group btn-group-sm" role="group">
                   		<a class="btn btn-default" href="{{ 'game_edit', 'eid=' . @game.eid | alias }}">
@@ -109,12 +142,15 @@
                   		<a class="btn btn-default modal-trigger" href="#" data-target="#gameEditModal" title="Edit Date/Time" data-gameattr="game-date" data-url="{{ 'game_editdate', 'eid='.@game.eid | alias }}">
                   			<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                   		</a>
-                  		<a class="btn btn-default modal-trigger" href="#" data-target="#gameEditModal" data-gameattr="game-score" data-url="{{ 'game_editscore', 'eid='.@game.eid | alias }}">
+                  		
+                  		<a class="btn btn-default modal-trigger" href="#" data-target="#gameEditModal" data-gameattr="game-score" <check if="{{ @game.event_date > time() }}">disabled="disabled"</check> data-url="{{ 'game_editscore', 'eid='.@game.eid | alias }}">
                   			<span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Scores
                   		</a>
+                  		<exclude>
                   		<a class="btn btn-default toggleGameStatus" data-target-eid="{{ @game.eid }}" data-gamestatus="{{ @gamestatus }}">
                   			<span class="glyphicon glyphicon-{{ @glyphclass }}" aria-hidden="true"></span> <span class='link-title'>{{ @linktitle }}</span>
                   		</a>
+                  		</exclude>
                   	</div>
                   </td>
                 </tr>

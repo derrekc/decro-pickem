@@ -1,0 +1,72 @@
+	<div class="col-md-6 col-xs-12 pull-right">
+		<div class='row'>	
+			<div class="col-sm-12">
+				<div>
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#decro_conf_picks" aria-controls="decro_top_15" role="tab" data-toggle="tab">decro's Top Fifteen</a></li>
+						<li role="presentation"><a href="#appearances" aria-controls="decro_conf_picks" role="tab" data-toggle="tab">decro's Conference Picks</a></li>
+					</ul>
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="decro_top_15">
+						<include href="decro_top_fifteen.htm"/>
+						</div>
+						<div role="tabpanel" class="tab-pane" id="decro_conf_picks">
+						<include href="decro_conf_picks.htm" />
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>
+	
+	<div class="col-md-6 col-xs-12 pull-left">
+	<check if="{{ isset(@player_pickem_slate )}}">
+		<div class="panel panel-default">
+	    <table class="table table-hover pickem-slate">
+	      <thead>
+	        <tr>
+	        	<!--th width="160" class="hidden-xs hidden-sm">&nbsp;</th-->
+	          <th>Week {{ @current_week }} Games</th>
+	          <th>Date</th>
+	          <th class="text-center hidden-sm hidden-xs">Kickoff/<br />Winner</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	      	<repeat group="{{ @player_pickem_slate }}" value="{{ @game }}">
+	        <tr>
+	        	<!--td width="160" class="hidden-xs hidden-sm">
+	        		<img height="32" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
+	        		<img height="32" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
+	        	</td-->
+	          <td>
+	          	<span class="hidden-xs hidden-sm">
+	          			<strong>{{ @game.visiting_team }}</strong> {{ @game.vs_at_symbol }} <strong>{{ @game.host_team }}</strong></span>
+	          	<span class="hidden-md hidden-lg"><strong>{{ @game.visiting_team }}</strong><br />{{ @game.vs_at_symbol }} <strong>{{ @game.host_team }}</strong></span><br />
+	          	<!--small>{{ @game.location }}</small-->
+	          </td>
+	          <td>{{ @game.game_date_short }}</td>
+	          <td class="text-right hidden-sm hidden-xs">
+	          <check if="{{ @game.completed == 'Y' }}">
+	          	<true>
+	          		{{ @game.winning_team }} {{ @game.final_score}}
+	          	</true>
+	          	<false>
+	          		{{ @game.kickoff_time }}
+	          	</false>
+	          </check>	
+	          </td>
+	        </tr>
+	        </repeat>
+	      </tbody>
+	    </table>				
+		</div>
+		<check if="{{ @user.status == 1}}">
+		<true>
+			<div style="margin-bottom: 1em;"><a href="{{ 'current_slate' | alias }}" class="btn btn-primary btn-block hidden-md hidden-lg">Make Your Picks</a></div>
+		</true>
+		<false>
+			<div style="margin-bottom: 1em;"><a href="{{ 'user_register' | alias }}" class="btn btn-primary btn-block">Sign Up Now!</a></div>
+		</false>
+		</check>
+	</check>
+	</div>

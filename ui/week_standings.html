@@ -1,21 +1,30 @@
-<div class="alert alert-info alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <span class="sr-only">Info:</span>
-  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-  <strong>Note:</strong> You can set your favorite team on the <a href="{{ 'user_profile' | alias }}"><strong>User Profile</strong></a> page.
-</div>	
+<div class="btn-toolbar">
+	<F3:week_btngroup current_week="{{ @pickem_week.week }}" 
+										path="/week-standings" 
+										pickem_id="{{ @pickem_id }}" 
+										route_arg="TRUE" 
+										show_all="FALSE" 
+										show_all_label="Show Current Picks"/>	
+</div>
 
 <div class='table-responsive'>
-	<table class="table table-hover table-bordered">
+	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th width="25">&nbsp;</th>
-				<th width="45%">Player</th>
+				<th width="30%">Player</th>
 				<th width="60" class="text-center">Correct</th>
 				<th width="60" class="text-center">Incorrect</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
+		<check if="{{ empty(@standings )}}">
+		<true>
+		<tbody>
+			<tr><td colspan="5">¯\_(ツ)_/¯ &ndash; No results for this week.</td></tr>
+		</tbody>
+		</true>
+		<false>
 		<tbody>
 			<repeat group="{{ @standings }}" value="{{ @p }}">
 			<tr>
@@ -29,5 +38,7 @@
 			</tr>
 			</repeat>
 		</tbody>
+		</false>
+		</check>
 	</table>
 </div>

@@ -1,36 +1,29 @@
-<check if="{{ @has_picks }}">
-	<false>
-	<div class="alert alert-warning" role="alert">
-	  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-	  <span class="sr-only">Error:</span>
-	  Make sure to submit your picks!
-	</div>
-	</false>
-</check>
 	<!--div class="alert alert-info" role="alert">
 	  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
 	  <span class="sr-only">Please note:</span>
 	 	The staff is in the process of adding and removing games for Week 1.  You will likely have to resubmit your picks soon.
 	</div-->
-<div class="alert alert-info alert-dismissible" role="alert">
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <span class="sr-only">Info:</span>
-  <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-  <strong>Note:</strong> You can set your favorite team on the <a href="{{ 'user_profile' | alias }}"><strong>User Profile</strong></a> page.
-</div>	
 
 <!-- Split button -->
-<div class="btn-group">
-  <button type="button" class="btn btn-default">Compare Picks With...</button>
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu">
-  <repeat group="{{ @active_players }}" value="{{ @p }}">
-    <li><a href="{{ 'compare_picks', 'p1=' . @user.uid . ',p2=' . @p.uid | alias }}">{{ @p.playername }}</a></li>
-  </repeat>
-  </ul>
+<div class="btn-toolbar">
+	<F3:week_btngroup current_week="{{ @pickem_week.week }}" 
+										path="{{ @btngroup_path }}" 
+										pickem_id="{{ @pickem_id }}" 
+										route_arg="TRUE" 
+										show_all="TRUE" 
+										show_all_label="Show Current Picks"/>	
+	<div class="btn-group btn-group-sm">
+	  <button type="button" class="btn btn-primary">Compare With...</button>
+	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    <span class="caret"></span>
+	    <span class="sr-only">Toggle Dropdown</span>
+	  </button>
+	  <ul class="dropdown-menu">
+	  <repeat group="{{ @active_players }}" value="{{ @p }}">
+	    <li><a href="{{ 'compare_picks', 'p1=' . @user.uid . ',p2=' . @p.uid | alias }}">{{ @p.playername }}</a></li>
+	  </repeat>
+	  </ul>
+	</div>
 </div>
 
 <form method="POST" action="{{ 'post_picks' | alias }}">
@@ -43,41 +36,59 @@
           <th>Date</th>
           <th class="hidden-xs">Kickoff/<br />Winner</th>
           <th>Your Pick</th>
+          <th class="hidden-xs hidden-sm text-center">TV</th>
           <th class="text-center hidden-xs hidden-sm">Notes</th>
         </tr>
       </thead>
       <tbody>
       	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
         <tr>
-        	<td width="160">
-        		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.visiting_team_name }}" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
-        		<img height="32" data-toggle="pickem" data-target="#pickTeamName_{{ @game.eid }}" data-teamname="{{ @game.host_team_name }}" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
-        	</td>
-          <td class="hidden-xs hidden-sm">
-          	<strong>{{ @game.visiting_team }} {{ @game.vs_at_symbol }} {{ @game.host_team }}</strong><br />
-          	<small>{{ @game.location }}</small>
-          </td>
+        	<check if="{{ @game.championship == TRUE}}">
+        	<true><include href="pickem_slate/championship_event.htm"/>
+        	</true>
+        	<false>
+        		<check if="{{ @game.bowlgame == TRUE }}">
+        		<true><include href="pickem_slate/bowl_event.htm" /></true>
+        		<false><include href="pickem_slate/regular_event.htm" /></false>
+        	</false>
+        	</check>
           <td>{{ @game.game_date_short }}</td>
-          <td class="hidden-xs">{{ @game.kickoff_time }}</td>
+          <td class="hidden-xs text-right">
+         	<check if="{{ @game.completed == 'Y' }}">
+          	<true>
+						<strong>{{ @game.winning_team }}<br />{{ @game.final_score }}</strong>          		
+          	</true>
+          	<false>{{ @game.event_kickoff_time }}</false>
+          </check>
+          </td>
           <td>
-          	<check if="{{ @pickem_week.open == 'Y' }}">
-         			<true>
-         				<check if="{{ @game.is_open }}">
-         					<true>
-			          		<set pick_options="{{ @game.pick_options }}" />
-			          		<include href="pick_options.htm" />
-         					</true>
-			          	<false>
-			          		<img height="32" src="/assets/logos/ncaaf/{{ @game.pick_team_name }}.gif" />
-			          	</false>
-         				</check>
-         			</true>
-         			<false>&nbsp;</false>
-          	</check>
+     				<check if="{{ @game.is_open }}">
+     					<true>
+	          		<set pick_options="{{ @game.pick_options }}" />
+	          		<include href="pick_options.htm" />
+     					</true>
+	          	<false>
+	          		<img height="32" src="/assets/logos/ncaaf/{{ @game.pick_team_name }}.gif" />
+	          		<check if="{{ @game.completed == 'Y' }}">
+	          			<check if="{{ @game.correct == 'Y' }}">
+		          			<true>
+		          				<span class="text-success"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" style="font-size: 24px;"></span></span>
+		          			</true>
+		          			<false>
+		          				<span class="text-danger"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" style="font-size: 24px;"></span></span>
+		          			</false>
+	          			</check>
+	          		</check>
+	          	</false>
+     				</check>
+          </td>
+          <td class="hidden-xs hidden-sm text-center">
+          <check if="{{ !empty(@game.tv_main) }}">
+          	<img height="40" src="/assets/logos/tv/{{ strtolower(@game.tv_main) }}.jpg" />
+          </check>
           </td>
           <td class="hidden-sm hidden-xs text-right">
           	<check if="{{ @pickem_week.open == 'Y' }}"><div><small>{{ @game.pick_count_msg | raw }}</small></div></check>
-          	<check if="{{ @user.name == 'ecuacc4ever' }}"><div><small>{{ @game.cutoff_time }}</small></div></check>
           </td>
         </tr>
         </repeat>
@@ -88,6 +99,7 @@
   <input type="hidden" name="token" value="{{ @SESSION.csrf }}" />
   <input type="hidden" name="week" value="{{ @pickem_week.week }}" />
   <input type="hidden" name="slate_count" value="{{ count(@pickem_slate) }}" />
+  <input type="hidden" name="pickem_id" value="{{ @pickem_id }}" />
   
   <check if="{{ @pickem_week.open == 'Y' }}">
   <button type="submit" class="btn btn-primary">Submit Picks</button>

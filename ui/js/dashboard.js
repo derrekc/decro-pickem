@@ -1,4 +1,6 @@
 (function($) {
+	// DOM elements to add/remove as needed
+	
 	$('#game-date').hide();
 	$('#game-score').hide();
 	
@@ -7,6 +9,8 @@
 		$('#visitingScore').val('');
 		$('#hostScore').val('');
 		$('#gameGameDate').data("DateTimePicker").defaultDate('');
+		$('#gameTV').val('');
+		$('#gameTVSecondary').val('');
 		
 		$('#game-date').hide();
 		$('#game-score').hide();		
@@ -53,6 +57,9 @@
 					game_date = moment(data.game_date_moment);
 					dtp = $('#gameGameDate').data("DateTimePicker").defaultDate(game_date);
 					$('#gameEditModalLabel').html(data.modal_title);
+					//$('#gameTV').val(data.game_tv);
+					$('#gameTV option[value="' + data.game_tv + '"]').prop('selected', true);
+					$('#gameTVSecondary').val(data.game_tv_seconary);
 					
 				}
 				$(data_target).modal('show');
@@ -65,6 +72,8 @@
 		return evt.preventDefault();
 	});
 	
+	// TEAM TYPEAHEAD
+	// --------------------------------------------------------------
 	$('.team-typeahead').typeahead({
 		minLength	: 2,
 		items : 20,
@@ -97,6 +106,9 @@
     }
 	});
 	
+	
+	// LOCATION TYPEAHEAD
+	// --------------------------------------------------------------
 	$('.location-typeahead').typeahead({
 		minLength	: 2,
 		items : 20,
@@ -157,10 +169,43 @@
 		})
 	});
 	
+	//-------------- COLORBOX TRIGGERS ----------------//
+	$('a.gallery').colorbox();
 	
 	//-------------- TEAM LOGOS as TRIGGERS -------------------//
 	$('IMG[data-toggle="pickem"]').on('click', function(evt) {
 		var target = $(this).attr('data-target');
 		$(target + ' option[value="' + $(this).attr('data-teamname') + '"]').prop('selected', true);
+	});
+	
+	//------------- TABLE BACKUP BUTTON and PROGRESS BAR -----------//
+	$('.progress', '#collapseTableBackup').hide();
+	$('#triggerTableBackup').on('click', function(evt) {
+		$.ajax({
+			url					: '/admin/pickem/backup',
+			cache				: false,
+			beforeSend	: function(o, settings) {
+				$('.progress', '#collapseTableBackup').show();
+			},
+			success			: function(data, txtStatus, o) {
+				$('.progress', '#collapseTableBackup').hide();
+				alert('Table Backups have been created.');
+			}
+		});
+		return evt.preventDefault();
+	});
+	
+	//----------- GENeral MODAL triggers -------------
+	$('.genmodal-trigger').on('click', function(evt) {
+		data_url = $(this).attr('data-url');
+		$.ajax({
+			url : data_url,
+			type : 'GET',
+			success : function(data, status, o) {
+				$('#genModal .modal-body').html(data.content);
+				$('#genModal').modal('show');
+			}
+		});
+		return evt.preventDefault();
 	})
 })(jQuery);

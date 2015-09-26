@@ -1,0 +1,54 @@
+<p class="bg-info col-xs-12" style="padding: 1em;"><small>Overall Standings last updated at {{ date('D, d M Y h:ia', @standings_last_update) }}</small></p>
+
+<div class="row">
+<div class='col-xs-12 table-responsive'>
+	<table class="table table-hover table-bordered">
+		<thead>
+			<tr>
+				<th width="5%" class="text-right">Rank</th>
+				<th width="5%">&nbsp;</th>
+				<th width="34%">Player</th>
+				<th width="8%" class="text-right"><small>Overall</small><br />Correct</th>
+				<th width="8%" class="text-right"><small>Overall</small><br />Incorrect</th>
+				<th width="8%" class="text-right hidden-sm hidden-xs"><small>This Week</small><br />Correct</th>
+				<th width="8%" class="text-right hidden-sm hidden-xs"><small>This Week</small><br />Incorrect</th>
+				<th width="8%" class="text-right">Rank<br />Last Week</th>
+				<th width="8%" class="text-right">Change<br /><small>From Last Week</small></th>
+				<th width="8%" class="text-right hidden-sm hidden-xs">Weeks<br />Won</th>
+			</tr>
+		</thead>
+		<tbody>
+			<repeat group="{{ @standings }}" value="{{ @p }}">
+			<tr<check if="{{ @p.playername == @user.name }}"> class="bg-info"</check>>
+				<td class="text-right"><strong>{{ @p.rank }}</strong></td>
+				<td class="text-center">
+					<check if="{{ @p.favorite_team_name != '' }}"><img height="16" src="/assets/logos/ncaaf/{{ @p.favorite_team_name }}.gif"</check>
+				</td>
+				<td>
+					{{ @p.playername }}
+					<check if="{{ @p.note }}">
+					<br /><small class="text-muted">{{ @p.note }}</small>
+					</check>
+				</td>
+				<td class="text-right bg-success">{{ @p.correct }}</td>
+				<td class="text-right bg-warning">{{ @p.incorrect }}</td>
+				<td class="text-right hidden-sm hidden-xs">{{ @p.correct_thisweek }}</td>
+				<td class="text-right hidden-sm hidden-xs">{{ @p.incorrect_thisweek }}</td>
+				<td class="text-right">{{ @p.previous_rank }}</td>
+				<td class="text-right">
+					<check if="{{ @p.show_delta }}">
+						<true>
+						{{ @p.rank_delta }}&nbsp;<span class="{{ @p.delta_class }}"><span class="glyphicon {{ @p.delta_glyphicon }}" style="font-size: 18px;"></span></span>	
+						</true>
+						<false>
+						<span class="text-muted">&ndash;</span>
+						</false>
+					</check>
+				</td>
+				<td class="text-right hidden-sm hidden-xs">{{ @p.player_win_count | raw }}</td>
+			</tr>
+			</repeat>
+		</tbody>
+	</table>
+</div>
+</div>

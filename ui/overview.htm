@@ -1,87 +1,159 @@
 <div class="row">
-	<div class="col-sm-5 pull-right">
-		<h4>When We Last Saw #goacc...</h4>
-		<img src="/assets/goacc/YCbBBbZ.jpg" width="100%" class="responsive img-thumbnail" />
-		<hr />
-		<p>Players for this pick'em have typically come from members of the world-renowed <a href="">ACCbbs fan forum</a>.</p>
-		<h4>Past Champions</h4>
-		<table class="table table-condensed table-striped">
-			<thead>
-				<tr>
-					<th width="60">Season</th>
-					<th>Champion</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>2015</td>
-					<td>?</td>
-				</tr>
-				<tr>
-					<td>2014</td>
-					<td>Kaplony</td>
-				</tr>
-				<tr>
-					<td>2013</td>
-					<td>4x4hokies</td>
-				</tr>
-				<tr>
-					<td>2012</td>
-					<td>ecuacc4ever</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="col-xs-12 col-md-5">
+		<div class="well well-sm">
+			<div>
+				<p><img src="https://dl.dropboxusercontent.com/u/83465791/excited_applause.gif" class="img-responsive img-rounded img-thumbnail"/></p>
+				<h4 class="media-heading">Week 3 Masters</h4>
+				<p><strong>stever20</strong>, <strong>Otacon</strong>, <strong>TerryD</strong>, <strong>batonrougeescapee</strong>, and <strong>Ole Blue</strong>.  Each finished with a record of 12-3.</p>
+			<check if="{{ @user.status == 1}}">
+			<true>
+				<div style="margin-bottom: 0.5em;"><a href="{{ 'current_slate' | alias }}" class="btn btn-primary btn-block hidden-md hidden-lg">Make/Review Your Picks</a></div>
+			</true>
+			<false>
+				<div style="margin-bottom: 0.5em;"><a href="{{ 'user_register' | alias }}" class="btn btn-primary btn-lg">Sign Up Now!</a></div>
+				<hr />
+			</false>
+			</check>
+			</div>
+			<div class="h3">How Are <strong><em>YOU</em></strong> Doing?</div>
+			<table class="table table-condensed">
+				<check if="{{ @player_standing }}">
+				<thead>
+					<tr>
+						<th class="text-uppercase small">Overall</th>
+						<th class="text-uppercase small text-right">Record</th>
+						<th class="text-uppercase small text-right">Rank</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ @player_standing.playername }}</td>
+						<td class="text-right">{{ @player_standing.correct }}-{{ @player_standing.incorrect }}</td>
+						<td class="text-right">{{ @player_standing.rank }}</td>
+					</tr>
+				</tbody>
+				</check>
+				<thead>
+					<tr>
+						<th class="text-uppercase small">Weekly Result</td>
+						<th class="text-uppercase small text-right">Record</td>
+						<th class="text-uppercase small text-right">Rank</td>
+					</tr>
+				</thead>
+				<tbody>
+				<repeat group="{{ @player_results }}" value="{{ @res }}">
+					<tr>
+						<td>Week {{ @res.week }}</td>
+						<td class="text-right">{{ @res.correct }}-{{ @res.incorrect }}</td>
+						<td class="text-right">{{ @res.rank }}</td>
+					</tr>
+				</repeat>
+				</tbody>
+			</table>
+		</div>
 	</div>
-	
-	<div class="col-sm-7 pull-left">
-	<p class="lead">Welcome to a new season of ACC Football, and with that, a new season of your favorite ACC pastime -- 
-	<strong>The 4th Annunal ACCbbs Football Pick'em</strong>.</p>
-	
-	<check if="{{ @user.status == 1}}">
-	<false>
-		<div><a href="{{ 'user_register' | alias }}" class="btn btn-primary btn-lg">Sign Up Now!</a></div>
-		<hr />
-	</false>
-	</check>
+	<!--div class="col-xs-12 col-sm-12 col-md-4 hidden-xs hidden-sm">
+		<a class="twitter-timeline" href="https://twitter.com/hashtag/csnwk4" data-widget-id="647439820176932864">#csnwk4 Tweets</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div-->
+	<div class="col-xs-12 col-md-3">
+		<img src="https://dl.dropboxusercontent.com/u/83465791/th2-doc-sidelines.jpg" class="img-rounded img-thumbnail img-responsive" />
+		<div class="h3"><small><strong>decro's</strong></small><br />Doc Award Winners</div>
+		<div class="h5 text-uppercase">Week 3</div>
+		<ul class="small" style="padding-left: 2em;">
+			<li><strong>C.J. Prosise</strong> (RB, Notre Dame), 22 carries, 198 yds, 3 TDs</li>
+			<li><strong>Navy's Rushing Attack</strong> (vs. East Carolina), 415 net rushing yards.</li>
+			<li><strong>Chad Kelly</strong> (QB, Ole Miss), 18-33, 341 yds, AND the TD pass of the season (to-date)</li>
+		</ul>
+		<exclude>
+		<!--div class="h5">Week 2</div>
+		<ul class="small" style="padding-left: 2em;">
+			<li><strong>BYU WR Mitch Mathews</strong>, who caught the Hail Mary pass that beat Nebraska</li>
+			<li><strong>Northwestern's defensive unit</strong>, holding Stanford to 240 yards and 6 points.</li>
+			<li><strong>UNC-Charlotte</strong>, playing AND winning its first FBS game</li>
+		</ul>
+		<div class="h5">Week 1</div>
+		<ul class="small" style="padding-left: 2em;">
+			<li><strong>BYU WR Mitch Mathews</strong>, who caught the Hail Mary pass that beat Nebraska</li>
+			<li><strong>Northwestern's defensive unit</strong>, holding Stanford to 240 yards and 6 points.</li>
+			<li><strong>UNC-Charlotte</strong>, playing AND winning its first FBS game</li>
+		</ul-->
+		</exclude>
+	</div>
+</div>
+
+<check if="{{ isset(@pickem_slate_public )}}">
+<set pickem_slate="{{ @pickem_slate_public }}" />
+<div class="h3">Pick Breakdown, by Percentage (%) - Week {{ @current_week }}</div>
+<include href="picks_breakdown.htm"/>
 </check>
 
-	<check if="{{ isset(@pickem_slate )}}">
-	<h4>Games We're Picking For Week {{ @pickem.current_week }}</h4>
-  <div class="table-responsive">
-    <table class="table table-hover table-condensed pickem-slate">
-      <thead>
-        <tr>
-        	<th width="160" class="hidden-xs hidden-sm">&nbsp;</th>
-          <th>Game</th>
-          <th>Date</th>
-          <th>Kickoff/<br />Winner</th>
-        </tr>
-      </thead>
-      <tbody>
-      	<repeat group="{{ @pickem_slate }}" value="{{ @game }}">
-        <tr>
-        	<td width="160" class="hidden-xs hidden-sm">
-        		<img height="32" src="/assets/logos/ncaaf/{{ @game.visiting_team_name }}.gif" />
-        		<img height="32" src="/assets/logos/ncaaf/{{ @game.host_team_name }}.gif" />
-        	</td>
-          <td>
-          	<strong>{{ @game.visiting_team }} {{ @game.vs_at_symbol }} {{ @game.host_team }}</strong><br />
-          	<small>{{ @game.location }}</small>
-          </td>
-          <td>{{ @game.game_date_short }}</td>
-          <td>{{ @game.kickoff_time }}</td>
-        </tr>
-        </repeat>
-      </tbody>
-    </table>
-  </div>
-	<check if="{{ @user.status == 1}}">
-	<true>
-		<div><a href="{{ 'current_slate' | alias }}" class="btn btn-primary btn-block hidden-md hidden-lg">Make Your Picks</a></div>
-	</true>
-	<false>
-		<div><a href="{{ 'user_register' | alias }}" class="btn btn-primary btn-block">Sign Up Now!</a></div>
-	</false>
-	</check>
-</check>
+<div class="row">
+
 </div>
+
+<check if="{{ isset(@pickem_slate )}}">
+<div class="h3">Pick Breakdown, by Percentage (%) - Week {{ @current_week }}</div>
+<include href="picks_breakdown.htm"/>
+</check>
+
+<div class="row">
+	<div class="col-sm-12">
+		<a name="standings"></a>
+		<h2>Standings</h2>
+		<include href="overall_standings.html"/>
+	</div>
+</div>
+<div class="row">
+	<div class=" col-sm-6">
+		<div class="well well-sm">
+			<a class="gallery" href="https://dl.dropboxusercontent.com/u/83465791/bummed_uva_fans.jpg"><img src="https://dl.dropboxusercontent.com/u/83465791/IMG_20150912_190308.jpg" width="100%" class="responsive img-thumbnail" /></a>
+			<h4>When We Last Saw #goacc...</h4>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="table-responsive well well-sm ">
+			<h3>Past Champions</h3>
+			<table class="table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th width="60">Season</th>
+						<th>Champion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>2015</td>
+						<td>?</td>
+					</tr>
+					<tr>
+						<td>2014</td>
+						<td>Kaplony</td>
+					</tr>
+					<tr>
+						<td>2013</td>
+						<td>4x4hokies</td>
+					</tr>
+					<tr>
+						<td>2012</td>
+						<td>ecuacc4ever</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>Players for this pick'em have typically come from members of the world-renowed <a href="">ACCbbs fan forum</a>.</p>
+		</div>
+			</div>
+</div>
+	<!--div class="col-sm-3 col-xs-12 pull-left">
+		<h3>
+			decro's Conference Picks<br />
+			<small>Just in time</small>
+		</h3>
+		<h4>ACC</h4>
+		<dl>
+			<dt>Champ</dt><dd>Georgia Tech</dd>
+			<dt>Sleeper</dt><dd>NC State</dd>
+			<dt>Ranked in Top 25</dt><dd>Georgia Tech, Clemson, FSU, Louisville, NC State</dd>
+		</dl>
+	</div>
+</div-->

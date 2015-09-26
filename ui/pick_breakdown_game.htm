@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-xs-12 col-md-6">
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Player</th>
+					<th class="text-center">Pick</th>
+				</tr>
+			</thead>
+			<tbody>
+				<repeat group="{{ @players }}" value="{{ @player }}">
+				<tr>
+					<td>{{ @player.playername }}</td>
+					<td class="text-center"><img height="32" src="/assets/logos/ncaaf/{{ @player.pick_team_name }}.gif" /></td>
+				</tr>
+				</repeat>
+			</tbody>
+		</table>
+	</div>
+	</div>
+</div>

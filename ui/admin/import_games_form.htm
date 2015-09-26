@@ -1,0 +1,6 @@
+<form class="form" enctype="multipart/form-data" method="post" action="{{ 'import_games' | alias }}">
+	<p>Select a CSV file containing games for import.</p>
+	<p>The file must contain a header row.</p>
+	<p><input type="file" name="file_upload" id="uploadFile" class="form-control"/></p>
+	<p><button type="submit" class="btn btn-primary">Submit</button></p>
+</form>

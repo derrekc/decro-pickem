@@ -24,7 +24,8 @@
 		<label class="col-sm-3 control-label" for="pickemDefaultPickSetting">Default Pick Setting</label>
 		<div class="col-sm-4">
 			<select class="form-control" id="pickemDefaultPickSetting" name="default_pick">
-				<option value="hostteam">Home Team</option>
+				<option value="hostteam"<check if="{{ @edit_user.default_pick == 'hostteam' }}"> SELECTED</check>>Home Team</option>
+				<option value="visitingteam"<check if="{{ @edit_user.default_pick == 'visitingteam' }}"> SELECTED</check>>Visiting Team</option>
 			</select>
 		</div>
 	</div>
@@ -34,6 +35,7 @@
 		<label class="col-sm-3 control-label" for="favoriteSchool">Primary Favorite ACC School</label>
 		<div class="col-sm-4">
 			{{ @team_chooser | raw }}
+			<span class="help-block">ACC fans - select your favorite ACC team.<br />Fans of other conferences, feel free to select your favorite team.</span>
 		</div>
 	</div>
 	</check>
